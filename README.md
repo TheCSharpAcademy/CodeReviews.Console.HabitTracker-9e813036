@@ -1,7 +1,7 @@
-<h1><bold>ConsoleHabitLogger</bold></h1>
-C# Console Application to track time spent on habits.
+# **ConsoleHabitLogger**
+C# Console Application to track time spent on habits and save it in a database.
 
-<h3><bold>Requirements</bold></h3>
+## **Requirements**
 This is an application where you’ll log occurrences of a habit.
 This habit can't be tracked by time (ex. hours of sleep), only by quantity (ex. number of water glasses a day)
 Users need to be able to input the date of the occurrence of the habit
@@ -13,21 +13,23 @@ You should handle all possible errors so that the application never crashes.
 You can only interact with the database using ADO.NET. You can’t use mappers such as Entity Framework or Dapper.
 Follow the DRY Principle, and avoid code repetition.
 
-<h3><bold>Features</bold></h3>
-<h5>SQLite Database</h5>
+## **Features**
+
+### SQLite Database
   Program uses SQLite as a basic database.
   If there is no database found one is created with default Hydration and Gym tables inserted with random data.
-<h5>Console Menu</h5>
-  User can navigate through program by use of menu.
-  User can proceed with many actions such as:
-    - Create new table
-    - Change table in use
-    - Insert data into table
-    - Delete data from table
-    - Update records
-    - Add newly created habits!
+  
+### Console Menu
+User can navigate through program by use of menu.
+User can proceed with many actions such as:
+  - Create new table
+  - Change table in use
+  - Insert data into table
+  - Delete data from table
+  - Update records
+  - Add newly created habits!
 
-<h3><bold>Challenges</bold></h3>
+## **Challenges**
   - The most difficult problem was with checking if user created table has TEXT or DATA Column in it before inserting data into it.
     The problem was that there was no data and i couldn't check if it's a normal string or if it's supposed to be a date by it and
     to make it even more difficult SQLite does not use DATE, it just save it as TEXT. I found out about many solutions to this problem
@@ -37,7 +39,7 @@ Follow the DRY Principle, and avoid code repetition.
   - I never used SQLite before and as mentioned above it made some hard time for me. I didn't use SQL much and needed to review some commands.
   - Because of implementation of new things I needed to change my code several times.
 
-<h3><bold>What Should I Remember In The Future</bold></h3>
+## **What Should I Remember In The Future**
   - Spend some time thinkning about design of project before coding
   - Make better use of git and it's functionalities
   - Use more classes if it's possible to make code more readable
