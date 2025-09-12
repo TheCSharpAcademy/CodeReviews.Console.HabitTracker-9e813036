@@ -1,10 +1,9 @@
-using System;
 using Microsoft.Data.Sqlite;
 using error_messages;
 
 namespace sql_management
 {
-    public static class SQLDatabaseHelper
+    public static class SqlDatabaseHelper
     {
         public static List<T> ExecuteQuery<T>(
             string connectionString,

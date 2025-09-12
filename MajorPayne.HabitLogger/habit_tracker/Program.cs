@@ -11,9 +11,9 @@ namespace habit_tracker
 
         static void Main()
         {
-            SQLGenerator.GenerateHabitTable(connectionString);
+            SqlGenerator.GenerateHabitTable(connectionString);
 
-            SQLRead sqlReader = new SQLRead(connectionString);
+            SqlRead sqlReader = new SqlRead(connectionString);
             bool closeApp = false;
 
             while (!closeApp)
@@ -35,13 +35,13 @@ namespace habit_tracker
                                 DisplayHabitRecords(connectionString, tableName);
                             break;
                         case "2":
-                            SQLCreate.CreateHabit(connectionString);
+                            SqlCreate.CreateHabit(connectionString);
                             break;
                         case "3":
-                            SQLUpdate.UpdateHabit(connectionString);
+                            SqlUpdate.UpdateHabit(connectionString);
                             break;
                         case "4":
-                            SQLDelete.DeleteHabit(connectionString);
+                            SqlDelete.DeleteHabit(connectionString);
                             break;
                         case ".test":
                             Console.WriteLine("Generating Test Data...");
@@ -63,7 +63,7 @@ namespace habit_tracker
 
         public static void DisplayHabitRecords(string connectionString, string tableName)
         {
-            SQLRead sqlReader = new SQLRead(connectionString);
+            SqlRead sqlReader = new SqlRead(connectionString);
 
             while (true)
             {
@@ -81,13 +81,13 @@ namespace habit_tracker
                             Console.ReadLine(); // Pause to let user read records
                             break;
                         case "2":
-                            SQLCreate.CreateRecord(connectionString, tableName);
+                            SqlCreate.CreateRecord(connectionString, tableName);
                             break;
                         case "3":
-                            SQLUpdate.UpdateRecord(connectionString, tableName);
+                            SqlUpdate.UpdateRecord(connectionString, tableName);
                             break;
                         case "4":
-                            SQLDelete.DeleteRecord(connectionString, tableName);
+                            SqlDelete.DeleteRecord(connectionString, tableName);
                             break;
                         default:
                             DisplayError.ErrorMessage("invalid_choice");

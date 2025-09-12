@@ -1,11 +1,11 @@
-using sql_management;
 using error_messages;
+using sql_management;
 
 namespace habit_tracker
 {
     public static class HabitSelector
     {
-        public static string? GetTableNameFromUserSelection(SQLRead sqlReader)
+        public static string? GetTableNameFromUserSelection(SqlRead sqlReader)
         {
             var habits = sqlReader.ViewAllHabits();
             if (habits.Count == 0)

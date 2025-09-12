@@ -1,6 +1,4 @@
-using System;
 using System.Globalization;
-using sql_management;
 
 namespace sql_management
 {
@@ -21,8 +19,8 @@ namespace sql_management
             {
                 try
                 {
-                    // Use your SQLCreate method to create the habit and its table
-                    SQLCreate.InsertHabit(connectionString, habit.Name, habit.Type, habit.TableName);
+                    // Use your SqlCreate method to create the habit and its table
+                    SqlCreate.InsertHabit(connectionString, habit.Name, habit.Type, habit.TableName);
 
                     // Insert 10 records with random dates and quantities
                     for (int i = 0; i < 200; i++)
@@ -34,8 +32,8 @@ namespace sql_management
                         // Random quantity between 10 and 100
                         int quantity = rand.Next(10, 101);
 
-                        // Use your SQLCreate method to insert the record
-                        SQLCreate.InsertRecord(connectionString, habit.TableName, dateStr, quantity, habit.Type);
+                        // Use your SqlCreate method to insert the record
+                        SqlCreate.InsertRecord(connectionString, habit.TableName, dateStr, quantity, habit.Type);
                     }
                 }
                 catch (Exception ex)
