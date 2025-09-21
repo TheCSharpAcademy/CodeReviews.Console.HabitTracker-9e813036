@@ -1,6 +1,5 @@
 ﻿using System.Data.SQLite;
 using System.Globalization;
-using System.Net;
 using System.Text.RegularExpressions;
 
 namespace HabitLogger;
@@ -93,7 +92,7 @@ class Program
                      "measurement TEXT NOT NULL, " +
                      "quantity REAL NOT NULL, " +
                      "habit_date TEXT NOT NULL) ";
-        ExecuteSQLNonQuery(sql, db);
+        ExecuteSqlNonQuery(sql, db);
 
         // Check if the table is empty and seed it if it is.
         string checkSql = "SELECT COUNT(*) FROM Habit";
@@ -374,7 +373,7 @@ class Program
         return command.ExecuteReader();
     }
 
-    static void ExecuteSQLNonQuery(string sql, SQLiteConnection db)
+    static void ExecuteSqlNonQuery(string sql, SQLiteConnection db)
     {
         using SQLiteCommand command = new(sql, db);
         command.ExecuteNonQuery();
