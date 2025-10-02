@@ -13,21 +13,49 @@ namespace sql_management
             _connectionString = connectionString;
         }
 
-        public List<Record> ViewAllRecords(string tableName)
+        public List<Record> ViewAllRecords(int habitId)
         {
             try
             {
-                return SqlDatabaseHelper.ExecuteQuery(
-                   _connectionString,
-                   $"SELECT * FROM [{tableName}];",
-                   reader => new Record
-                   {
-                       Id = reader.GetInt32(0),
-                       Date = DateTime.Parse(reader.GetString(1)),
-                       Quantity = reader.GetInt32(2),
-                       Type = reader.IsDBNull(3) ? null : reader.GetString(3)
-                   }
-               );
+                var records = SqlDatabaseHelper.ExecuteQuery(
+                    _connectionString,
+                    "SELECT Id, HabitId, Date, Quantity, Type FROM records WHERE HabitId = @HabitId;",
+                    reader =>
+                    {
+                        // Get column ordinals by name
+                        int colRecordId = reader.GetOrdinal("Id");
+                        int colHabitId = reader.GetOrdinal("HabitId");
+                        int colDate = reader.GetOrdinal("Date");
+                        int colQuantity = reader.GetOrdinal("Quantity");
+                        int colType = reader.GetOrdinal("Type");
+
+                        // Map reader to Record
+                        return new Record
+                        {
+                            Id = reader.GetInt32(colRecordId),
+                            HabitId = reader.GetInt32(colHabitId),
+                            Date = DateTime.Parse(reader.GetString(colDate)),
+                            Quantity = reader.GetInt32(colQuantity),
+                            Type = reader.IsDBNull(colType) ? null : reader.GetString(colType)
+                        };
+                    },
+                    cmd => cmd.Parameters.AddWithValue("@HabitId", habitId)
+                );
+
+                Console.WriteLine($"\nRecords for Habit ID {habitId}:");
+                if (records.Count == 0)
+                {
+                    Console.WriteLine("No records found for this habit.");
+                }
+                else
+                {
+                    foreach (var record in records)
+                    {
+                        Console.WriteLine($"Record: {record.Id} | Date: {record.Date.ToShortDateString()} | Qty: {record.Quantity} {record.Type}");
+                    }
+                    
+                }
+                return records;
             }
             catch (Exception ex)
             {
@@ -40,24 +68,48 @@ namespace sql_management
         {
             try
             {
-                return SqlDatabaseHelper.ExecuteQuery(
+                var habits = SqlDatabaseHelper.ExecuteQuery(
                     _connectionString,
-                    "SELECT * FROM habits;",
-                    reader => new Habit
+                    "SELECT Id, Name, Type FROM habits;",
+                    reader =>
                     {
-                        Id = reader.GetInt32(0),
-                        Name = reader.GetString(1),
-                        Type = reader.GetString(2),
-                        TableName = reader.GetString(3)
+                        int colId = reader.GetOrdinal("Id");
+                        int colName = reader.GetOrdinal("Name");
+                        int colType = reader.GetOrdinal("Type");
+
+                        return new Habit
+                        {
+                            Id = reader.GetInt32(colId),
+                            Name = reader.GetString(colName),
+                            Type = reader.GetString(colType)
+                        };
                     }
                 );
+
+                if (habits.Count == 0)
+                {
+                    Console.WriteLine("No habits found.");
+                }
+                else
+                {
+                    foreach (var habit in habits)
+                    {
+                        Console.WriteLine(
+                            $"ID: {habit.Id} | Name: {habit.Name} | Type: {habit.Type}"
+                        );
+                    }
+                }
+
+                return habits;
             }
             catch (Exception ex)
             {
                 DisplayError.ErrorMessage("Critical Error: " + ex.Message);
-                throw;
+                return new List<Habit>();
             }
 
+
         }
+
     }
 }

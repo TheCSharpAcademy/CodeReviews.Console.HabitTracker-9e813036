@@ -52,7 +52,7 @@ namespace menu_manager
 
         public static void WaterMenu()
         {
-            Console.WriteLine("\n\nPlease insert number of glasses or other measure of your choice " + "(no decimals allowed)\n\n");
+            Console.WriteLine("\n\nPlease insert quantity " + "(no decimals allowed)\n\n");
         }
 
         public static void UpdateMenu()

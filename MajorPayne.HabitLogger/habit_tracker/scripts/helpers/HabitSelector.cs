@@ -5,13 +5,13 @@ namespace habit_tracker
 {
     public static class HabitSelector
     {
-        public static string? GetTableNameFromUserSelection(SqlRead sqlReader)
+        public static int GetHabitIdFromUserSelection(SqlRead sqlReader)
         {
             var habits = sqlReader.ViewAllHabits();
             if (habits.Count == 0)
             {
                 Console.WriteLine("No habits found.");
-                return null;
+                return 0;
             }
 
             Console.WriteLine("\nSelect a habit by number (0 to return to main menu): ");
@@ -22,7 +22,7 @@ namespace habit_tracker
                 string input = InputManager.GetUserInput();
 
                 if (input == "0")
-                    return null; // Return to main menu
+                    return 0; // Return to main menu
 
                 if (int.TryParse(input, out index) && index >= 1 && index <= habits.Count)
                     break;
@@ -31,7 +31,7 @@ namespace habit_tracker
             }
 
             // Return actual table name
-            return habits[index - 1].TableName;
+            return habits[index - 1].Id;
         }
     }
 }

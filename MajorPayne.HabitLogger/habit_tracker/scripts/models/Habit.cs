@@ -1,3 +1,5 @@
+using System;
+
 namespace models
 {
     public class Habit
@@ -5,6 +7,5 @@ namespace models
         public int Id { get; set; }
         public required string Name { get; set; }
         public required string Type { get; set; }
-        public required string TableName { get; set; }
     }
 }

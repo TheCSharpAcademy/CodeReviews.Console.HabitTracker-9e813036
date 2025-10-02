@@ -6,61 +6,46 @@ namespace sql_management
 {
     public class SqlGenerator
     {
-        public static void GenerateSqlTable(string connectionString, string tableName)
+        public static void GenerateSqlTables(string connectionString)
         {
             try
             {
                 using (var connection = new SqliteConnection(connectionString))
                 {
                     connection.Open();
-                    var tableCmd = connection.CreateCommand();
+                    var habitsCmd = connection.CreateCommand();
 
-                    tableCmd.CommandText =
-                        $@"CREATE TABLE IF NOT EXISTS [{tableName}] (
-                        Id INTEGER PRIMARY KEY AUTOINCREMENT,
-                        date TEXT,
-                        quantity INTEGER,
-                        type TEXT
+                    habitsCmd.CommandText =
+                        $@"CREATE TABLE IF NOT EXISTS habits (
+                            Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                            Name TEXT NOT NULL,
+                            Type TEXT NOT NULL
                         );";
 
-                    tableCmd.ExecuteNonQuery();
+                    habitsCmd.ExecuteNonQuery();
+
+
+                    var recordsCmd = connection.CreateCommand();
+
+                    recordsCmd.CommandText =
+                        $@"CREATE TABLE IF NOT EXISTS records (
+                            Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                            HabitId INTEGER NOT NULL,
+                            Date TEXT NOT NULL,
+                            Quantity INTEGER NOT NULL,
+                            Type TEXT NOT NULL,
+                            FOREIGN KEY (HabitId) REFERENCES Habits(Id)
+                        );";
+
+                    recordsCmd.ExecuteNonQuery();
 
                     connection.Close();
                 }
+                Console.WriteLine("Database and tables created successfully. (Habits and Records)");
             }
             catch (Exception ex)
             {
-                DisplayError.ErrorMessage($"Error generating SQL table: {ex.Message}");
-                throw;
-            }
-
-        }
-
-        public static void GenerateHabitTable(string connectionString)
-        {
-            try
-            {
-                using (var connection = new SqliteConnection(connectionString))
-                {
-                    connection.Open();
-                    var tableCmd = connection.CreateCommand();
-
-                    tableCmd.CommandText =
-                        @"CREATE TABLE IF NOT EXISTS habits (
-                        Id INTEGER PRIMARY KEY AUTOINCREMENT,
-                        name TEXT NOT NULL,
-                        type TEXT NOT NULL,
-                        tableName TEXT NOT NULL UNIQUE
-                        );";
-
-                    tableCmd.ExecuteNonQuery();
-
-                    connection.Close();
-                }
-            }
-            catch (Exception ex)
-            {
-                DisplayError.ErrorMessage($"Error generating habit table: {ex.Message}");
+                DisplayError.ErrorMessage($"Error generating SQL tables: {ex.Message}");
                 throw;
             }
 

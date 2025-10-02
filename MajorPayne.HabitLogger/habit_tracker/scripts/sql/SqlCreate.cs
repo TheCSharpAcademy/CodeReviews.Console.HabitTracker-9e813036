@@ -6,25 +6,22 @@ namespace sql_management
 {
     public class SqlCreate
     {
-        // ✅ Low-level habit insert with error handling
-        public static void InsertHabit(string connectionString, string name, string type, string tableName)
+        // Low-level habit insert with error handling
+        public static void InsertHabit(string connectionString, string name, string type)
         {
             try
             {
                 SqlDatabaseHelper.ExecuteNonQuery(
                     connectionString,
-                    $"INSERT INTO habits(name, type, tableName) VALUES (@name, @type, @tableName);",
+                    $"INSERT INTO habits(name, type) VALUES (@name, @type);",
                     cmd =>
                     {
                         cmd.Parameters.AddWithValue("@name", name);
                         cmd.Parameters.AddWithValue("@type", type);
-                        cmd.Parameters.AddWithValue("@tableName", tableName);
                     }
                 );
 
-                SqlGenerator.GenerateSqlTable(connectionString, tableName);
-
-                Console.WriteLine($"Habit '{name}' created successfully with table '{tableName}'.");
+                Console.WriteLine($"Habit '{name}' created successfully.");
             }
             catch (Exception ex)
             {
@@ -32,31 +29,32 @@ namespace sql_management
             }
         }
 
-        // ✅ Low-level record insert with error handling
-        public static void InsertRecord(string connectionString, string tableName, string date, int quantity, string type)
+        // Low-level record insert with error handling
+        public static void InsertRecord(string connectionString, int habitId, string date, int quantity, string type)
         {
             try
             {
                 SqlDatabaseHelper.ExecuteNonQuery(
                     connectionString,
-                    $"INSERT INTO [{tableName}] (date, quantity, type) VALUES (@Date, @Quantity, @Type);",
+                    $"INSERT INTO records (habitId, date, quantity, type) VALUES (@HabitId, @Date, @Quantity, @Type);",
                     cmd =>
                     {
+                        cmd.Parameters.AddWithValue("@HabitId", habitId);
                         cmd.Parameters.AddWithValue("@Date", date);
                         cmd.Parameters.AddWithValue("@Quantity", quantity);
                         cmd.Parameters.AddWithValue("@Type", type);
                     }
                 );
 
-                Console.WriteLine($"Record added to '{tableName}' on {date}: {quantity} {type}.");
+                Console.WriteLine($"Record added to Habit index '{habitId}' on {date}: {quantity} {type}.");
             }
             catch (Exception ex)
             {
-                DisplayError.ErrorMessage($"Error inserting record into '{tableName}': {ex.Message}");
+                DisplayError.ErrorMessage($"Error inserting record into Habit Id '{habitId}': {ex.Message}");
             }
         }
 
-        // ✅ UI-driven habit creation with error handling
+        // UI-driven habit creation with error handling
         public static void CreateHabit(string connectionString)
         {
             Console.Clear();
@@ -68,9 +66,7 @@ namespace sql_management
                 MenuManager.HabitTypeMenu();
                 string type = InputManager.GetHabitInput();
 
-                string tableName = SqlDatabaseHelper.GenerateTableName(name);
-
-                InsertHabit(connectionString, name, type, tableName);
+                InsertHabit(connectionString, name, type);
             }
             catch (Exception ex)
             {
@@ -78,8 +74,8 @@ namespace sql_management
             }
         }
 
-        // ✅ UI-driven record creation with error handling
-        public static void CreateRecord(string connectionString, string tableName)
+        // UI-driven record creation with error handling
+        public static void CreateRecord(string connectionString, int habitId)
         {
             Console.Clear();
             try
@@ -95,9 +91,9 @@ namespace sql_management
                     return;
                 }
 
-                string type = SqlDatabaseHelper.GetHabitType(connectionString, tableName) ?? "units";
+                string type = SqlDatabaseHelper.GetHabitType(connectionString, habitId) ?? "units";
 
-                InsertRecord(connectionString, tableName, date, quantity, type);
+                InsertRecord(connectionString, habitId, date, quantity, type);
             }
             catch (Exception ex)
             {

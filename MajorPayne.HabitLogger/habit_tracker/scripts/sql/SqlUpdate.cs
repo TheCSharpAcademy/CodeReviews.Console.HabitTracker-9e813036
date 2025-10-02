@@ -6,11 +6,11 @@ namespace sql_management
 {
     public class SqlUpdate
     {
-        public static void UpdateRecord(string connectionString, string tableName)
+        public static void UpdateRecord(string connectionString, int habitId)
         {
             Console.Clear();
             SqlRead sqlRead = new SqlRead(connectionString);
-            sqlRead.ViewAllRecords(tableName);
+            sqlRead.ViewAllRecords(habitId);
 
             MenuManager.UpdateMenu();
             var recordId = Convert.ToInt32(InputManager.GetUserInput());
@@ -26,7 +26,7 @@ namespace sql_management
             {
                 SqlDatabaseHelper.ExecuteNonQuery(
                     connectionString,
-                    $"UPDATE [{tableName}] SET date = @Date, quantity = @Quantity WHERE Id =@Id;",
+                    $"UPDATE records SET date = @Date, quantity = @Quantity WHERE Id =@Id;",
                     cmd =>
                     {
                         cmd.Parameters.AddWithValue("@Id", recordId);

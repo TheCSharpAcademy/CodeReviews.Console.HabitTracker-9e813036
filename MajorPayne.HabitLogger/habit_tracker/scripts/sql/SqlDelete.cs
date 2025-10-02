@@ -6,11 +6,11 @@ namespace sql_management
 {
     public class SqlDelete
     {
-        public static void DeleteRecord(string connectionString, string tableName)
+        public static void DeleteRecord(string connectionString, int habitId)
         {
             Console.Clear();
             SqlRead sqlRead = new SqlRead(connectionString);
-            sqlRead.ViewAllRecords(tableName);
+            sqlRead.ViewAllRecords(habitId);
 
             MenuManager.DeleteMenu();
             var recordId = Convert.ToInt32(InputManager.GetUserInput());
@@ -20,7 +20,7 @@ namespace sql_management
             {
                 SqlDatabaseHelper.ExecuteNonQuery(
                     connectionString,
-                    $"DELETE FROM [{tableName}] WHERE Id = @Id;",
+                    $"DELETE FROM records WHERE Id = @Id;",
                     cmd => cmd.Parameters.AddWithValue("@Id", recordId)
                 );
             }

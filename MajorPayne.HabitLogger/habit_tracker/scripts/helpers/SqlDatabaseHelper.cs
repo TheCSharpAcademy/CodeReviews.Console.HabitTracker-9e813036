@@ -29,7 +29,7 @@ namespace sql_management
                         while (reader.Read())
                         {
                             results.Add(mapFunction(reader));
-                            Console.WriteLine($"{reader.GetInt32(0)} | {reader.GetString(1)} | {reader.GetString(2)}");
+                            //Console.WriteLine($"{reader.GetInt32(0)} | {reader.GetString(1)} | {reader.GetString(2)}");
                         }
                         return results;
                     }
@@ -60,40 +60,20 @@ namespace sql_management
             }
         }
 
-        public static string GenerateTableName(string habitName)
+        public static string GetHabitType(string connectionString, int habitId)
         {
-            string safe = new string(habitName
-                .ToLower()
-                .Replace(' ', '_')
-                .ToCharArray());
-
-            try
-            {
-                safe = System.Text.RegularExpressions.Regex.Replace(safe, @"[^a-z0-9_]", "");
-            }
-            catch (Exception ex)
-            {
-                DisplayError.ErrorMessage($"Error generating table name: {ex.Message}");
-                throw;
-            }
-
-            return $"habit_{safe}_{Guid.NewGuid().ToString("N").Substring(0, 8)}";
-        }
-
-        public static string? GetHabitType(string connectionString, string tableName)
-        {
-            string? type = null;
+            string type = "unknown";
             try
             {
                 using (var connection = new SqliteConnection(connectionString))
                 {
                     connection.Open();
                     var cmd = connection.CreateCommand();
-                    cmd.CommandText = "SELECT Type FROM habits WHERE TableName = @tableName;";
-                    cmd.Parameters.AddWithValue("@tableName", tableName);
+                    cmd.CommandText = "SELECT Type FROM habits WHERE Id = @Id;";
+                    cmd.Parameters.AddWithValue("@Id", habitId);
                     var result = cmd.ExecuteScalar();
                     if (result != null && result != DBNull.Value)
-                        type = result.ToString();
+                        type = result.ToString() ?? "unknown";
                 }
             }
             catch (Exception ex)
@@ -101,7 +81,6 @@ namespace sql_management
                 DisplayError.ErrorMessage($"Error retrieving habit type: {ex.Message}");
                 throw;
             }
-
 
             return type;
         }

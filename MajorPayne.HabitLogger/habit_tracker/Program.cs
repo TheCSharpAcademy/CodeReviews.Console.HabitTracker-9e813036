@@ -11,7 +11,7 @@ namespace habit_tracker
 
         static void Main()
         {
-            SqlGenerator.GenerateHabitTable(connectionString);
+            SqlGenerator.GenerateSqlTables(connectionString);
 
             SqlRead sqlReader = new SqlRead(connectionString);
             bool closeApp = false;
@@ -30,9 +30,9 @@ namespace habit_tracker
                             closeApp = true;
                             break;
                         case "1":
-                            string? tableName = HabitSelector.GetTableNameFromUserSelection(sqlReader);
-                            if (tableName != null)
-                                DisplayHabitRecords(connectionString, tableName);
+                            int habitId = HabitSelector.GetHabitIdFromUserSelection(sqlReader);
+                            if (habitId > 0)
+                                DisplayHabitRecords(connectionString, habitId);
                             break;
                         case "2":
                             SqlCreate.CreateHabit(connectionString);
@@ -56,12 +56,10 @@ namespace habit_tracker
                 {
                     DisplayError.ErrorMessage("An error occurred in Main: " + ex.Message);
                 }
-
-
             }
         }
 
-        public static void DisplayHabitRecords(string connectionString, string tableName)
+        public static void DisplayHabitRecords(string connectionString, int habitId)
         {
             SqlRead sqlReader = new SqlRead(connectionString);
 
@@ -77,17 +75,17 @@ namespace habit_tracker
                         case "0":
                             return; // Return to main menu
                         case "1":
-                            sqlReader.ViewAllRecords(tableName);
+                            sqlReader.ViewAllRecords(habitId);
                             Console.ReadLine(); // Pause to let user read records
                             break;
                         case "2":
-                            SqlCreate.CreateRecord(connectionString, tableName);
+                            SqlCreate.CreateRecord(connectionString, habitId);
                             break;
                         case "3":
-                            SqlUpdate.UpdateRecord(connectionString, tableName);
+                            SqlUpdate.UpdateRecord(connectionString, habitId);
                             break;
                         case "4":
-                            SqlDelete.DeleteRecord(connectionString, tableName);
+                            SqlDelete.DeleteRecord(connectionString, habitId);
                             break;
                         default:
                             DisplayError.ErrorMessage("invalid_choice");
