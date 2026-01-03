@@ -2,7 +2,7 @@
 Trackington HabitLogger is a simple console app developed in C# using SQLite for storage. The app allows the user to track occurances of a habit by supplying a quantity of occurances and the date they occured on.
 
 # Requirements
-The given requirements are as follows
+The given requirements are as follows:
 * The application must allow users to log occurances of a habit
 * The application should initialize and use a real SQLite database for all CRUD operations
 * The database may only be handled via ADO.NET
