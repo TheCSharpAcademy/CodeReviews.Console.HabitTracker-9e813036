@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HabitTracker", "HabitTracker\HabitTracker.csproj", "{1D4177F4-2BC8-48DE-8FDD-FE05D56EF9C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseLogic", "DatabaseLogic\DatabaseLogic.csproj", "{D5BCE2B7-7E94-4E88-8AEE-D4ADD19AFBC1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1D4177F4-2BC8-48DE-8FDD-FE05D56EF9C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D4177F4-2BC8-48DE-8FDD-FE05D56EF9C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D4177F4-2BC8-48DE-8FDD-FE05D56EF9C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D4177F4-2BC8-48DE-8FDD-FE05D56EF9C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5BCE2B7-7E94-4E88-8AEE-D4ADD19AFBC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5BCE2B7-7E94-4E88-8AEE-D4ADD19AFBC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5BCE2B7-7E94-4E88-8AEE-D4ADD19AFBC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5BCE2B7-7E94-4E88-8AEE-D4ADD19AFBC1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
