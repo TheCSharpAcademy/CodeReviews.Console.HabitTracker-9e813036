@@ -1,0 +1,30 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HabitLogger.Kaylubr", "HabitLogger.Kaylubr\HabitLogger.Kaylubr.csproj", "{21AF9D88-5137-AC78-74A9-3CE0CC4A58DC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HabitLoggerApi", "HabitLoggerApi\HabitLoggerApi.csproj", "{BE72125E-2258-F9AE-36E4-DF1A14945463}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{21AF9D88-5137-AC78-74A9-3CE0CC4A58DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21AF9D88-5137-AC78-74A9-3CE0CC4A58DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21AF9D88-5137-AC78-74A9-3CE0CC4A58DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21AF9D88-5137-AC78-74A9-3CE0CC4A58DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE72125E-2258-F9AE-36E4-DF1A14945463}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE72125E-2258-F9AE-36E4-DF1A14945463}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE72125E-2258-F9AE-36E4-DF1A14945463}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE72125E-2258-F9AE-36E4-DF1A14945463}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AFB8C45C-357B-4EAA-A555-1AF786F636CA}
+	EndGlobalSection
+EndGlobal
