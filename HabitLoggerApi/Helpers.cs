@@ -22,7 +22,7 @@ internal static class Helper
 
     while (!int.TryParse(quantityInput, out _) || Convert.ToInt32(quantityInput) < 0)
     {
-      Console.WriteLine("\n\nInvalid number. Try again.\n\n");
+      Console.WriteLine("Invalid number. Try again.");
       quantityInput = Console.ReadLine();
     }
 

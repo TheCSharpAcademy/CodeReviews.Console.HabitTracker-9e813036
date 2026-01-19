@@ -1,3 +1,4 @@
+using HabitLoggerApi.Models;
 using Microsoft.Data.Sqlite;
 
 namespace HabitLoggerApi;
@@ -45,5 +46,38 @@ public static class Database
     command.ExecuteNonQuery();
 
     connection.Close();
+  }
+
+  public static List<Habit> QueryAllHabits()
+  {
+    List<Habit> habits = [];
+
+    using var connection = new SqliteConnection(connectionString);
+    connection.Open();
+
+    var command = connection.CreateCommand();
+    command.CommandText = @$"SELECT * FROM habit;";
+
+    SqliteDataReader reader = command.ExecuteReader();
+
+    if (reader.HasRows)
+    {
+      while (reader.Read())
+      {
+        habits.Add(
+          new Habit
+          {
+            Id = reader.GetInt32(0),
+            Name = reader.GetString(1),
+            Created_at = DateTime.Parse(reader.GetString(2)),
+            Quantity = reader.GetInt32(3)
+          }
+        );
+      }
+    }
+
+    connection.Close();
+
+    return habits;
   }
 }

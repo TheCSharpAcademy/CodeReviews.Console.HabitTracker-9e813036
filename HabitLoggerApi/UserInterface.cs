@@ -9,6 +9,8 @@ public static class UserInterface
     bool programDone = false;
     while (programDone == false)
     {
+      Console.Clear();
+
       Console.WriteLine("=== WELCOME TO HABIT LOGGER === ");
       Console.WriteLine("1. View all habits");
       Console.WriteLine("2. Add habit");
@@ -24,6 +26,7 @@ public static class UserInterface
       switch (choice)
       {
         case "1":
+          HabitController.ViewHabits();
           break;
         case "2":
           HabitController.AddHabit();

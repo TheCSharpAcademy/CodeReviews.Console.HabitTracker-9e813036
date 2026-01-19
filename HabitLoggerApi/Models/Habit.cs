@@ -1,6 +1,6 @@
 namespace HabitLoggerApi.Models;
 
-internal class Habit
+public class Habit
 {
   internal int Id { get; set; }
   internal string? Name { get; set; }
