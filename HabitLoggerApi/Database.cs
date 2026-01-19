@@ -15,20 +15,35 @@ public static class Database
 
   public static void InitializeDB()
   {
-    using (var connection = new SqliteConnection(connectionString))
-    {
-      connection.Open();
+    using var connection = new SqliteConnection(connectionString);
+    connection.Open();
 
-      var command = connection.CreateCommand();
-      command.CommandText = @"CREATE TABLE IF NOT EXISTS drinking_water (
-                              Id INTEGER PRIMARY KEY AUTOINCREMENT,
-                              Date TEXT,
-                              Quantity INTEGER
+    var command = connection.CreateCommand();
+    command.CommandText = @"CREATE TABLE IF NOT EXISTS habit (
+                              id INTEGER PRIMARY KEY AUTOINCREMENT,
+                              name TEXT,
+                              date TEXT,
+                              quantity INTEGER
                             )";
 
-      command.ExecuteNonQuery();
+    command.ExecuteNonQuery();
 
-      connection.Close();
-    }
+    connection.Close();
+  }
+
+  public static void CreateHabit(string? name, string date, int quantity)
+  {
+    using var connection = new SqliteConnection(connectionString);
+    connection.Open();
+
+    var command = connection.CreateCommand();
+    command.CommandText = @$"INSERT INTO habit (name, date, quantity) VALUES ($name, $date, $quantity)";
+    command.Parameters.AddWithValue("$name", name);
+    command.Parameters.AddWithValue("$date", date);
+    command.Parameters.AddWithValue("$quantity", quantity);
+
+    command.ExecuteNonQuery();
+
+    connection.Close();
   }
 }

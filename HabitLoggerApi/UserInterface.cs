@@ -1,4 +1,6 @@
-﻿namespace HabitLoggerApi;
+﻿using HabitLoggerApi.Controllers;
+
+namespace HabitLoggerApi;
 
 public static class UserInterface
 {
@@ -17,11 +19,14 @@ public static class UserInterface
       Console.Write("\nChoice: ");
       string? choice = Console.ReadLine();
 
+      Console.Clear();
+
       switch (choice)
       {
         case "1":
           break;
         case "2":
+          HabitController.AddHabit();
           break;
         case "3":
           break;
@@ -33,8 +38,6 @@ public static class UserInterface
           Environment.Exit(0);
           break;
       }
-
-      Console.Clear();
     }
   }
 }
