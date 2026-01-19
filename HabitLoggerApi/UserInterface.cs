@@ -37,7 +37,7 @@ public static class UserInterface
           break;
         case "5":
           programDone = true;
-          Console.WriteLine("\nExiting..");
+          Console.WriteLine("Exiting..");
           Environment.Exit(0);
           break;
       }

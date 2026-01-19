@@ -19,9 +19,16 @@ internal static class HabitController
 
     Console.WriteLine("ALL HABITS\n");
 
-    foreach (var habit in allHabits)
+    if (allHabits.Count > 1)
     {
-      Console.WriteLine(@$"ID: {habit.Id} - {habit.Name}, created at: {habit.Created_at} - Quantity: {habit.Quantity}");
+      foreach (var habit in allHabits)
+      {
+        Console.WriteLine(@$"ID: {habit.Id} - {habit.Name}, created at: {habit.Created_at} - Quantity: {habit.Quantity}");
+      }
+    }
+    else
+    {
+      Console.WriteLine("No records yet.");
     }
 
     Console.Write("\nPress any key to continue..");
