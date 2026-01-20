@@ -32,4 +32,31 @@ internal static class Helper
 
     return quantity;
   }
+
+  internal static int GetID()
+  {
+    Console.Write("Please provide the ID to be edited: ");
+    string? idInput = Console.ReadLine();
+
+    while (!int.TryParse(idInput, out _) || Convert.ToInt32(idInput) < 0)
+    {
+      Console.WriteLine("Invalid ID number. Try again.");
+      idInput = Console.ReadLine();
+    }
+
+    int id = Convert.ToInt32(idInput);
+
+    return id;
+  }
+
+  internal static void ExitProgram()
+  {
+    Console.WriteLine("Exiting..");
+
+    Console.Write("\nPress any key to exit..");
+    Console.ReadKey();
+
+    Console.Clear();
+    Environment.Exit(0);
+  }
 }

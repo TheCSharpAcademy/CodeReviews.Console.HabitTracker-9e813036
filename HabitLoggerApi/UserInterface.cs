@@ -6,8 +6,7 @@ public static class UserInterface
 {
   public static void Run()
   {
-    bool programDone = false;
-    while (programDone == false)
+    while (true)
     {
       Console.Clear();
 
@@ -26,19 +25,18 @@ public static class UserInterface
       switch (choice)
       {
         case "1":
-          HabitController.ViewHabits();
+          HabitController.ShowAllHabits();
           break;
         case "2":
           HabitController.AddHabit();
           break;
         case "3":
+          HabitController.UpdateHabitQuantity();
           break;
         case "4":
           break;
         case "5":
-          programDone = true;
-          Console.WriteLine("Exiting..");
-          Environment.Exit(0);
+          Helper.ExitProgram();
           break;
       }
     }

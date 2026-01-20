@@ -80,4 +80,33 @@ public static class Database
 
     return habits;
   }
+
+  public static bool UpdateQuery(int id, int quantity)
+  {
+    using var connection = new SqliteConnection(connectionString);
+    connection.Open();
+
+    var command = connection.CreateCommand();
+    command.CommandText = @$"SELECT EXISTS(SELECT 1 FROM habit WHERE id = $id)";
+    command.Parameters.AddWithValue("$id", id);
+    int checkQuery = Convert.ToInt32(command.ExecuteScalar());
+
+    if (checkQuery == 0)
+    {
+      connection.Close();
+      return false;
+    }
+
+    command.Parameters.Clear();
+
+    command.CommandText = @$"UPDATE habit SET quantity = $quantity WHERE id = $id";
+    command.Parameters.AddWithValue("$id", id);
+    command.Parameters.AddWithValue("$quantity", quantity);
+
+    command.ExecuteNonQuery();
+
+    connection.Close();
+
+    return true;
+  }
 }

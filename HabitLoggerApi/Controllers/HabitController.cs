@@ -13,11 +13,42 @@ internal static class HabitController
     Database.CreateHabit(name, date, quantity);
   }
 
-  internal static void ViewHabits()
+  internal static void ShowAllHabits()
+  {
+    RenderHabits();
+
+    Console.Write("Press any key to continue..");
+    Console.ReadKey();
+  }
+
+  internal static void UpdateHabitQuantity()
+  {
+    RenderHabits();
+
+    int id = Helper.GetID();
+    int newQuantity = Helper.GetQuantityInput();
+
+    bool success = Database.UpdateQuery(id, newQuantity);
+
+    if (success)
+      Console.WriteLine("Successfully updated!");
+    else
+      Console.WriteLine($"No record found with ID of {id}");
+
+    Console.Write("\nPress any key to continue..");
+    Console.ReadKey();
+  }
+
+  /* 
+    Difference of ShowAllHabits and RenderHabits is RenderHabits is reusable
+    while ShowAllHabits is just for rendering and having a 
+    'menu option' quality with it 
+  */
+  static void RenderHabits()
   {
     List<Habit> allHabits = Database.QueryAllHabits();
 
-    Console.WriteLine("ALL HABITS\n");
+    Console.WriteLine("-------------------------------------------------------------------------\n");
 
     if (allHabits.Count > 1)
     {
@@ -31,7 +62,6 @@ internal static class HabitController
       Console.WriteLine("No records yet.");
     }
 
-    Console.Write("\nPress any key to continue..");
-    Console.ReadKey();
+    Console.WriteLine("\n-------------------------------------------------------------------------\n");
   }
 }
