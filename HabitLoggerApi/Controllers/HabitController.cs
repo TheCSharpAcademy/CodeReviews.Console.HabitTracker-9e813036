@@ -8,7 +8,7 @@ internal static class HabitController
   {
     string? name = Helper.GetHabitName();
     int quantity = Helper.GetQuantityInput();
-    string date = DateTime.Now.ToString();
+    string date = Helper.GetDate();
 
     Database.CreateHabit(name, date, quantity);
   }
@@ -60,7 +60,7 @@ internal static class HabitController
       bool success = Database.DeleteQuery(id);
 
       if (success)
-        Console.WriteLine("Successfully deleted!");
+        Console.WriteLine("\nSuccessfully deleted!");
       else
         Console.WriteLine($"\nNo record found with ID of {id}");
     }

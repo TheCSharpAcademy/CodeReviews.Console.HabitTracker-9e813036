@@ -1,3 +1,4 @@
+using System.Globalization;
 using HabitLoggerApi.Models;
 using Microsoft.Data.Sqlite;
 
@@ -69,7 +70,7 @@ public static class Database
           {
             Id = reader.GetInt32(0),
             Name = reader.GetString(1),
-            Created_at = DateTime.Parse(reader.GetString(2)),
+            Created_at = DateOnly.Parse(reader.GetString(2)),
             Quantity = reader.GetInt32(3)
           }
         );

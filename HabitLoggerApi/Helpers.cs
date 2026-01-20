@@ -1,3 +1,5 @@
+using System.Globalization;
+
 namespace HabitLoggerApi;
 
 internal static class Helper
@@ -26,11 +28,35 @@ internal static class Helper
       quantityInput = Console.ReadLine();
     }
 
-    Console.Clear();
-
     int quantity = Convert.ToInt32(quantityInput);
 
     return quantity;
+  }
+
+  internal static string GetDate()
+  {
+    string? choice;
+
+    do
+    {
+      Console.Write("Do you want to use the current date? [Y/N]: ");
+      choice = Console.ReadLine()?.ToUpper().Trim();
+    } while (choice != "Y" && choice != "N");
+
+
+    if (choice == "Y")
+      return DateOnly.FromDateTime(DateTime.Today).ToString();
+
+    Console.Write("\nPlease provide the date in this format dd-MM-yy: ");
+    string? dateInput = Console.ReadLine();
+
+    while (!DateTime.TryParseExact(dateInput, "dd-MM-yy", new CultureInfo("en-US"), DateTimeStyles.None, out _))
+    {
+      Console.Write("Invalid date. (Format: dd-mm-yy). Try again: ");
+      dateInput = Console.ReadLine();
+    }
+
+    return dateInput;
   }
 
   internal static int GetID()
