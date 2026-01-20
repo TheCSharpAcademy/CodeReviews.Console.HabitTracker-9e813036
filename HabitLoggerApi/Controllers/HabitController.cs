@@ -27,7 +27,6 @@ internal static class HabitController
 
     int id = Helper.GetID();
     int newQuantity = Helper.GetQuantityInput();
-
     bool success = Database.UpdateQuery(id, newQuantity);
 
     if (success)
@@ -38,6 +37,23 @@ internal static class HabitController
     Console.Write("\nPress any key to continue..");
     Console.ReadKey();
   }
+
+  internal static void DeleteHabit()
+  {
+    RenderHabits();
+
+    int id = Helper.GetID();
+    bool success = Database.DeleteQuery(id);
+
+    if (success)
+      Console.WriteLine("\nSuccessfully deleted!");
+    else
+      Console.WriteLine($"\nNo record found with ID of {id}");
+
+    Console.Write("\nPress any key to continue..");
+    Console.ReadKey();
+  }
+
 
   /* 
     Difference of ShowAllHabits and RenderHabits is RenderHabits is reusable
@@ -50,7 +66,7 @@ internal static class HabitController
 
     Console.WriteLine("-------------------------------------------------------------------------\n");
 
-    if (allHabits.Count > 1)
+    if (allHabits.Count >= 1)
     {
       foreach (var habit in allHabits)
       {

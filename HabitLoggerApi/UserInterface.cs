@@ -34,6 +34,7 @@ public static class UserInterface
           HabitController.UpdateHabitQuantity();
           break;
         case "4":
+          HabitController.DeleteHabit();
           break;
         case "5":
           Helper.ExitProgram();

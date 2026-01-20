@@ -87,11 +87,9 @@ public static class Database
     connection.Open();
 
     var command = connection.CreateCommand();
-    command.CommandText = @$"SELECT EXISTS(SELECT 1 FROM habit WHERE id = $id)";
-    command.Parameters.AddWithValue("$id", id);
-    int checkQuery = Convert.ToInt32(command.ExecuteScalar());
 
-    if (checkQuery == 0)
+    bool isHabitPresent = DoesHabitExist(id, command);
+    if (!isHabitPresent)
     {
       connection.Close();
       return false;
@@ -106,6 +104,49 @@ public static class Database
     command.ExecuteNonQuery();
 
     connection.Close();
+
+    return true;
+  }
+
+  public static bool DeleteQuery(int id)
+  {
+    using var connection = new SqliteConnection(connectionString);
+    connection.Open();
+
+    var command = connection.CreateCommand();
+
+    bool isHabitPresent = DoesHabitExist(id, command);
+
+    if (!isHabitPresent)
+    {
+      connection.Close();
+      return false;
+    }
+
+    command.Parameters.Clear();
+
+    Console.WriteLine($"ID: {id}\n");
+
+    command.CommandText = @$"DELETE FROM habit WHERE id = $id";
+    command.Parameters.AddWithValue("$id", id);
+
+    command.ExecuteNonQuery();
+
+    connection.Close();
+
+    return true;
+  }
+
+  static bool DoesHabitExist(int id, SqliteCommand command)
+  {
+    command.CommandText = @$"SELECT EXISTS(SELECT 1 FROM habit WHERE id = $id)";
+    command.Parameters.AddWithValue("$id", id);
+    int checkQuery = Convert.ToInt32(command.ExecuteScalar());
+
+    if (checkQuery == 0)
+    {
+      return false;
+    }
 
     return true;
   }

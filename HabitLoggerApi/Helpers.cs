@@ -40,7 +40,7 @@ internal static class Helper
 
     while (!int.TryParse(idInput, out _) || Convert.ToInt32(idInput) < 0)
     {
-      Console.WriteLine("Invalid ID number. Try again.");
+      Console.WriteLine("\nInvalid ID number. Try again.");
       idInput = Console.ReadLine();
     }
 
