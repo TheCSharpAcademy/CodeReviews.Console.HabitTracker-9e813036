@@ -9,7 +9,7 @@ internal static class Helper
     string? habitName = "";
     while (habitName?.Trim() == "")
     {
-      Console.Write("Please insert the name: ");
+      Console.Write("Please insert the name. Type '0' to go back: ");
       habitName = Console.ReadLine();
     }
 
@@ -61,7 +61,7 @@ internal static class Helper
 
   internal static int GetID()
   {
-    Console.Write("Please provide the ID to be edited: ");
+    Console.Write("Please provide the ID to be edited. Type '0' to go back: ");
     string? idInput = Console.ReadLine();
 
     while (!int.TryParse(idInput, out _) || Convert.ToInt32(idInput) < 0)

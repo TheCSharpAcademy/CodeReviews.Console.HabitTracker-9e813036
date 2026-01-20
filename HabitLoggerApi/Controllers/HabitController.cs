@@ -7,6 +7,10 @@ internal static class HabitController
   internal static void AddHabit()
   {
     string? name = Helper.GetHabitName();
+
+    if (name == "0")
+      return;
+
     int quantity = Helper.GetQuantityInput();
     string date = Helper.GetDate();
 
@@ -28,6 +32,10 @@ internal static class HabitController
     if (Database.HabitRecordsLength() > 0)
     {
       int id = Helper.GetID();
+
+      if (id == 0)
+        return;
+
       string date = Helper.GetDate();
       int newQuantity = Helper.GetQuantityInput();
       bool success = Database.UpdateQuery(id, date, newQuantity);
@@ -50,6 +58,9 @@ internal static class HabitController
     {
 
       int id = Helper.GetID();
+
+      if (id == 0)
+        return;
 
       string? choice;
 
