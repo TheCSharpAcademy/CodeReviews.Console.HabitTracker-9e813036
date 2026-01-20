@@ -31,7 +31,7 @@ public static class UserInterface
           HabitController.AddHabit();
           break;
         case "3":
-          HabitController.UpdateHabitQuantity();
+          HabitController.UpdateHabit();
           break;
         case "4":
           HabitController.DeleteHabit();

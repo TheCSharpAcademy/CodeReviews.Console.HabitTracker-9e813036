@@ -82,7 +82,7 @@ public static class Database
     return habits;
   }
 
-  public static bool UpdateQuery(int id, int quantity)
+  public static bool UpdateQuery(int id, string newDate, int quantity)
   {
     using var connection = new SqliteConnection(connectionString);
     connection.Open();
@@ -98,8 +98,9 @@ public static class Database
 
     command.Parameters.Clear();
 
-    command.CommandText = @$"UPDATE habit SET quantity = $quantity WHERE id = $id";
+    command.CommandText = @$"UPDATE habit SET date = $date, quantity = $quantity WHERE id = $id";
     command.Parameters.AddWithValue("$id", id);
+    command.Parameters.AddWithValue("$date", newDate);
     command.Parameters.AddWithValue("$quantity", quantity);
 
     command.ExecuteNonQuery();
