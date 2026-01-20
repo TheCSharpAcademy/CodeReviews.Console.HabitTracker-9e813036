@@ -31,7 +31,7 @@ internal static class HabitController
 
     if (Database.HabitRecordsLength() > 0)
     {
-      int id = Helper.GetID();
+      int id = Helper.GetID("edited");
 
       if (id == 0)
         return;
@@ -57,7 +57,7 @@ internal static class HabitController
     if (Database.HabitRecordsLength() > 0)
     {
 
-      int id = Helper.GetID();
+      int id = Helper.GetID("deleted");
 
       if (id == 0)
         return;

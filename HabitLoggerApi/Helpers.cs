@@ -59,9 +59,9 @@ internal static class Helper
     return dateInput;
   }
 
-  internal static int GetID()
+  internal static int GetID(string option)
   {
-    Console.Write("Please provide the ID to be edited. Type '0' to go back: ");
+    Console.Write($"Please provide the ID to be {option}. Type '0' to go back: ");
     string? idInput = Console.ReadLine();
 
     while (!int.TryParse(idInput, out _) || Convert.ToInt32(idInput) < 0)
