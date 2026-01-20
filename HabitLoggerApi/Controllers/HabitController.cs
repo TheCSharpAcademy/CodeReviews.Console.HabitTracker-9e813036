@@ -25,14 +25,17 @@ internal static class HabitController
   {
     RenderHabits();
 
-    int id = Helper.GetID();
-    int newQuantity = Helper.GetQuantityInput();
-    bool success = Database.UpdateQuery(id, newQuantity);
+    if (Database.HabitRecordsLength() > 0)
+    {
+      int id = Helper.GetID();
+      int newQuantity = Helper.GetQuantityInput();
+      bool success = Database.UpdateQuery(id, newQuantity);
 
-    if (success)
-      Console.WriteLine("Successfully updated!");
-    else
-      Console.WriteLine($"No record found with ID of {id}");
+      if (success)
+        Console.WriteLine("Successfully updated!");
+      else
+        Console.WriteLine($"No record found with ID of {id}");
+    }
 
     Console.Write("\nPress any key to continue..");
     Console.ReadKey();
@@ -43,12 +46,24 @@ internal static class HabitController
     RenderHabits();
 
     int id = Helper.GetID();
-    bool success = Database.DeleteQuery(id);
 
-    if (success)
-      Console.WriteLine("\nSuccessfully deleted!");
-    else
-      Console.WriteLine($"\nNo record found with ID of {id}");
+    string? choice = "";
+
+    do
+    {
+      Console.Write("Are you sure? [Y/N]: ");
+      choice = Console.ReadLine()?.ToUpper().Trim();
+    } while (choice != "Y" && choice != "N");
+
+    if (choice == "Y")
+    {
+      bool success = Database.DeleteQuery(id);
+
+      if (success)
+        Console.WriteLine("Successfully deleted!");
+      else
+        Console.WriteLine($"\nNo record found with ID of {id}");
+    }
 
     Console.Write("\nPress any key to continue..");
     Console.ReadKey();

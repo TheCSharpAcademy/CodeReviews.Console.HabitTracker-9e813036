@@ -125,8 +125,6 @@ public static class Database
 
     command.Parameters.Clear();
 
-    Console.WriteLine($"ID: {id}\n");
-
     command.CommandText = @$"DELETE FROM habit WHERE id = $id";
     command.Parameters.AddWithValue("$id", id);
 
@@ -149,5 +147,10 @@ public static class Database
     }
 
     return true;
+  }
+
+  public static int HabitRecordsLength()
+  {
+    return QueryAllHabits().Count;
   }
 }
