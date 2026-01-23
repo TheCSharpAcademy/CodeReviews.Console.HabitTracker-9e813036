@@ -19,7 +19,7 @@ namespace habitLogger._0lcm
         }
 
         //------- Execute Helper Methods -------
-        private static int ExecuteNonQuery(string sqlCommand, params (string name, object? value)[] parameters)
+        private static void ExecuteNonQuery(string sqlCommand, params (string name, object? value)[] parameters)
         {
             using var connection = CreateOpenConnection();
             using var command = connection.CreateCommand();
@@ -29,8 +29,6 @@ namespace habitLogger._0lcm
             {
                 command.Parameters.AddWithValue(name, value);
             }
-
-            return command.ExecuteNonQuery();
         }
 
         private static T? ExecuteScalar<T>(string sqlCommand, params (string name, object? value)[] parameters)
@@ -117,7 +115,6 @@ namespace habitLogger._0lcm
         public static void InsertNewHabitInstance(HabitInstanceCreate habitInstance)
         {
             const string insertCommand = "INSERT INTO habitInstances (parentId, quantity, date) VALUES (@parentId, @quantity, @date)";
-            SqliteConnection connection = CreateOpenConnection();
             try
             {
                 ExecuteNonQuery(insertCommand, 
