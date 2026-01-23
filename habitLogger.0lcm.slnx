@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="habitLogger.0lcm.UnitTests/habitLogger.0lcm.UnitTests.csproj" Id="60524b4f-e467-4bc1-841c-a80b525f12d9" />
+  <Project Path="habitLogger.0lcm/habitLogger.0lcm.csproj" />
+</Solution>
