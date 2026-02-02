@@ -29,6 +29,8 @@ namespace habitLogger._0lcm
             {
                 command.Parameters.AddWithValue(name, value);
             }
+
+            command.ExecuteNonQuery();
         }
 
         private static T? ExecuteScalar<T>(string sqlCommand, params (string name, object? value)[] parameters)
