@@ -50,13 +50,15 @@ internal static class Helper
     Console.Write("\nPlease provide the date in this format dd-MM-yy: ");
     string? dateInput = Console.ReadLine();
 
-    while (!DateTime.TryParseExact(dateInput, "dd-MM-yy", new CultureInfo("en-US"), DateTimeStyles.None, out _))
+    DateTime date;
+
+    while (!DateTime.TryParseExact(dateInput, "dd-MM-yy", new CultureInfo("en-US"), DateTimeStyles.None, out date))
     {
       Console.Write("Invalid date. (Format: dd-mm-yy). Try again: ");
       dateInput = Console.ReadLine();
     }
 
-    return dateInput;
+    return DateOnly.FromDateTime(date).ToString();
   }
 
   internal static int GetID(string option)
