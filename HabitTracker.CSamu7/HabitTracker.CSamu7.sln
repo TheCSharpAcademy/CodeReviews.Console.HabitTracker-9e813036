@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36908.2 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HabitTracker.CSamu7", "HabitTracker.CSamu7.csproj", "{BDD105ED-1042-4761-942C-856B60E7AE08}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BDD105ED-1042-4761-942C-856B60E7AE08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDD105ED-1042-4761-942C-856B60E7AE08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDD105ED-1042-4761-942C-856B60E7AE08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDD105ED-1042-4761-942C-856B60E7AE08}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {62CF9238-977B-48CB-9CA3-AD685E878AD5}
+	EndGlobalSection
+EndGlobal
