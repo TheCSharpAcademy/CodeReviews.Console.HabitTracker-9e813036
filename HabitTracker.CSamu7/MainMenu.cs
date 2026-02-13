@@ -1,4 +1,6 @@
-﻿namespace HabitTracker.CSamu7
+﻿using HabitTracker.CSamu7.Properties;
+
+namespace HabitTracker.CSamu7
 {
     public class MainMenu
     {
@@ -26,7 +28,8 @@
             switch (option)
             {
                 case 1:
-                    //Create a new habit
+                    HabitCreation habitCreation = new();
+                    habitCreation.CreateHabit();
                     break;
                 case 2:
                     //Check your habits
