@@ -1,6 +1,4 @@
-﻿using HabitTracker.CSamu7.Properties;
-
-namespace HabitTracker.CSamu7
+﻿namespace HabitTracker.CSamu7
 {
     public class MainMenu
     {
@@ -22,17 +20,19 @@ namespace HabitTracker.CSamu7
             int option = ConsoleUtils.ReadInt();
 
             ExecuteOption(option);
+            Console.Clear();
         }
         public void ExecuteOption(int option)
         {
+            HabitControllers habitCreation = new();
+
             switch (option)
             {
                 case 1:
-                    HabitCreation habitCreation = new();
                     habitCreation.CreateHabit();
                     break;
                 case 2:
-                    //Check your habits
+                    habitCreation.GetHabits();
                     break;
                 case 3:
                     //Log a habit
