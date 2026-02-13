@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36908.2 d17.14
+VisualStudioVersion = 17.14.36908.2
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HabitTracker.CSamu7", "HabitTracker.CSamu7.csproj", "{BDD105ED-1042-4761-942C-856B60E7AE08}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTesting", "..\UnitTesting\UnitTesting.csproj", "{13D611AE-EF94-4C31-8025-F45C764D9E9C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{BDD105ED-1042-4761-942C-856B60E7AE08}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BDD105ED-1042-4761-942C-856B60E7AE08}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BDD105ED-1042-4761-942C-856B60E7AE08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13D611AE-EF94-4C31-8025-F45C764D9E9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13D611AE-EF94-4C31-8025-F45C764D9E9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13D611AE-EF94-4C31-8025-F45C764D9E9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13D611AE-EF94-4C31-8025-F45C764D9E9C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
