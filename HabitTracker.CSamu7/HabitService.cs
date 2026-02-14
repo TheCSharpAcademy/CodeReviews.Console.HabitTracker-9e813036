@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HabitTracker.CSamu7
+﻿namespace HabitTracker.CSamu7
 {
     public class HabitService
     {

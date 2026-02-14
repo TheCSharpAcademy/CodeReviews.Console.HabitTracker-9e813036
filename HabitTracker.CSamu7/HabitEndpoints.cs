@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HabitTracker.CSamu7.Properties
+namespace HabitTracker.CSamu7
 {
-    public class HabitCreation
+    public class HabitEndpoints
     {
         public void CreateHabit()
         {
