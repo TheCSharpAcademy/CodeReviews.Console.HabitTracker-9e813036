@@ -1,4 +1,4 @@
-﻿namespace HabitTracker.CSamu7
+﻿namespace HabitTracker.CSamu7.Validations
 {
     public class ValidationResult<T>
     {

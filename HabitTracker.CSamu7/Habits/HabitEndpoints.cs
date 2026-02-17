@@ -1,6 +1,12 @@
-﻿namespace HabitTracker.CSamu7
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace HabitTracker.CSamu7.Habits
 {
-    public class HabitControllers
+    public class HabitEndpoints
     {
         private readonly HabitService _service = new HabitService();
         public void CreateHabit()
@@ -8,7 +14,8 @@
             Console.WriteLine("Enter the name of the habit");
             string name = ConsoleUtils.ReadString();
 
-            bool isSuccess = _service.PostHabit(name);
+            HabitService service = new HabitService();
+            bool isSuccess = service.PostHabit(name);
 
             if (isSuccess) {
                 Console.WriteLine($"The habit {name} has been added!");
@@ -19,13 +26,13 @@
         }
         public void GetHabits()
         {
-            List<Habit> habits = _service.GetHabits();
+            List<HabitModel> habits = _service.GetHabits();
 
             if (habits.Count > 0)
             {
                 Console.WriteLine("ID\t|\tName");
 
-                foreach(Habit habit in habits)
+                foreach (HabitModel habit in habits)
                 {
                     Console.WriteLine($"{habit.Id}\t|\t{habit.Name}");
                 }

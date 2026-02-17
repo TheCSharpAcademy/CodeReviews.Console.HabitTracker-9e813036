@@ -1,7 +1,7 @@
 ﻿using Microsoft.Data.Sqlite;
 using System.Data.Common;
 
-namespace HabitTracker.CSamu7
+namespace HabitTracker.CSamu7.Habits
 {
     public class HabitDb
     {

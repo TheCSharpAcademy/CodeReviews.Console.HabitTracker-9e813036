@@ -1,4 +1,5 @@
 ﻿using HabitTracker.CSamu7;
+using HabitTracker.CSamu7.Habits;
 
 MainMenu mainMenu = new MainMenu();
 
