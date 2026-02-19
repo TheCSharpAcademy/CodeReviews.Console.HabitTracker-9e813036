@@ -7,26 +7,25 @@
         {
             _timeProvider = timeProvider;
         }
-        public ValidationResult<DateOnly> Validate(string date)
+        public ValidationResult<DateTimeOffset> Validate(string date)
         {
             List<string> errors = new List<string>();
             DateTimeOffset now = _timeProvider.GetLocalNow();
-            DateOnly dateNow = new(now.Year, now.Month, now.Day);
-            DateOnly dateParsed;
+            DateTimeOffset dateParsed;
 
-            if(!DateOnly.TryParse(date, out dateParsed))
+            if(!DateTimeOffset.TryParse(date, out dateParsed))
             {
-                errors.Add("This is a invalid date. Valid date (yyyy/mm/dd)");
+                errors.Add("This is a invalid date. Example of valid date (yyyy/mm/dd)");
             }
 
-            if (dateParsed > dateNow)
+            if (dateParsed > now)
             {
                 errors.Add("The date must be in the present");
             }
 
             return errors.Count > 0
-                ? ValidationResult<DateOnly>.Failure(errors)
-                : ValidationResult<DateOnly>.Success(dateParsed);
+                ? ValidationResult<DateTimeOffset>.Failure(errors)
+                : ValidationResult<DateTimeOffset>.Success(now);
         }
     }
 }

@@ -1,7 +1,7 @@
 using HabitTracker.CSamu7.Validations;
 using Microsoft.Extensions.Time.Testing;
 
-namespace UnitTesting
+namespace UnitTesting.Validations
 {
     public class DateValidationTests
     {

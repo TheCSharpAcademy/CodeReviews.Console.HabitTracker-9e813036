@@ -1,4 +1,8 @@
-﻿namespace HabitTracker.CSamu7
+﻿using HabitTracker.CSamu7.Habits;
+using HabitTracker.CSamu7.HabitsLog;
+using System.Threading.Tasks;
+
+namespace HabitTracker.CSamu7
 {
     public class MainMenu
     {
@@ -22,20 +26,21 @@
             ExecuteOption(option);
             Console.Clear();
         }
-        public void ExecuteOption(int option)
+        public async void ExecuteOption(int option)
         {
-            HabitControllers habitCreation = new();
+            HabitEndpoints habitEndpoints = new();
+            HabitLogEndpoints habitLogEndpoints = new();
 
             switch (option)
             {
                 case 1:
-                    habitCreation.CreateHabit();
+                    habitEndpoints.CreateHabit();
                     break;
                 case 2:
-                    habitCreation.GetHabits();
+                    habitEndpoints.GetHabits();
                     break;
                 case 3:
-                    //Log a habit
+                    await habitLogEndpoints.CreateHabit();
                     break;
                 case 4:
                     //Check all the logs

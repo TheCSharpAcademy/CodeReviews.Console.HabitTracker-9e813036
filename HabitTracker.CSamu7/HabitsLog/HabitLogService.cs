@@ -12,11 +12,11 @@ namespace HabitTracker.CSamu7.HabitsLog
             connection.Open();
 
             var command = connection.CreateCommand();
-            command.CommandText = "INSERT INTO HabitsLog(idHabit, amount, date) VALUES (@idHabit, @amount, @date)";
+            command.CommandText = "INSERT INTO HabitsLog(habit_id, amount, date) VALUES (@habit_id, @amount, @date)";
             
-            command.Parameters.Add(new SqliteParameter("@idHabit", model.IdHabit));
+            command.Parameters.Add(new SqliteParameter("@habit_id", model.IdHabit));
             command.Parameters.Add(new SqliteParameter("@amount", model.Amount));
-            command.Parameters.Add(new SqliteParameter("@date", model.Date));
+            command.Parameters.Add(new SqliteParameter("@date", model.UnixTimestamp));
 
             var result = command.ExecuteNonQuery();
 

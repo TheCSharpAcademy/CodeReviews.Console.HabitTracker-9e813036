@@ -9,13 +9,13 @@ namespace HabitTracker.CSamu7.Habits
     public class HabitEndpoints
     {
         private readonly HabitService _service = new HabitService();
-        public void CreateHabit()
+        public async void CreateHabit()
         {
-            Console.WriteLine("Enter the name of the habit");
+            Console.Write("Enter the name: ");
             string name = ConsoleUtils.ReadString();
 
             HabitService service = new HabitService();
-            bool isSuccess = service.PostHabit(name);
+            bool isSuccess = await service.PostHabit(name);
 
             if (isSuccess) {
                 Console.WriteLine($"The habit {name} has been added!");
@@ -23,18 +23,22 @@ namespace HabitTracker.CSamu7.Habits
             {
                 Console.WriteLine("Something happened...");
             }
+
+            Console.WriteLine("Enter any key to continue");
+            Console.ReadKey();
         }
-        public void GetHabits()
+        public async void GetHabits()
         {
-            List<HabitModel> habits = _service.GetHabits();
+            List<HabitModel> habits = await _service.GetHabits();
 
             if (habits.Count > 0)
             {
-                Console.WriteLine("ID\t|\tName");
+                Console.WriteLine("ID\t| Name");
+                Console.WriteLine(new String('=', 80));
 
                 foreach (HabitModel habit in habits)
                 {
-                    Console.WriteLine($"{habit.Id}\t|\t{habit.Name}");
+                    Console.WriteLine($"{habit.Id}\t| {habit.Name}");
                 }
             } else
             {
