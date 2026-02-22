@@ -40,9 +40,10 @@ namespace HabitTracker.CSamu7
                     habitEndpoints.GetHabits();
                     break;
                 case 3:
-                    await habitLogEndpoints.CreateHabit();
+                    await habitLogEndpoints.CreateLogHabit();
                     break;
-                case 4:
+                case 4: 
+                    await habitLogEndpoints.GetLogHabits();
                     //Check all the logs
                     break;
                 case 5:

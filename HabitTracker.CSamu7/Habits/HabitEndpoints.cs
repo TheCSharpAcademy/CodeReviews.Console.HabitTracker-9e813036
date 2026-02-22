@@ -24,8 +24,7 @@ namespace HabitTracker.CSamu7.Habits
                 Console.WriteLine("Something happened...");
             }
 
-            Console.WriteLine("Enter any key to continue");
-            Console.ReadKey();
+            ConsoleUtils.WaitKey();
         }
         public async void GetHabits()
         {
@@ -33,20 +32,20 @@ namespace HabitTracker.CSamu7.Habits
 
             if (habits.Count > 0)
             {
-                Console.WriteLine("ID\t| Name");
+                Console.WriteLine(new String('=', 80));
+                Console.WriteLine("{0,-5}| {1,-20}", "Id", "Name");
                 Console.WriteLine(new String('=', 80));
 
                 foreach (HabitModel habit in habits)
                 {
-                    Console.WriteLine($"{habit.Id}\t| {habit.Name}");
+                    Console.WriteLine("{0,-5}| {1,-20}", habit.Id, habit.Name);
                 }
             } else
             {
                 Console.WriteLine("You don't have habits created");
             }
 
-            Console.WriteLine("Enter any key to continue");
-            Console.ReadKey();
+            ConsoleUtils.WaitKey();
         }
     }
 }
