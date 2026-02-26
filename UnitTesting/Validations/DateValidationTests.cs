@@ -15,7 +15,7 @@ namespace UnitTesting.Validations
 
             Assert.True(result.IsValid);
             Assert.IsType<DateOnly>(result.Value);
-            Assert.Empty(result.Errors);
+            Assert.Empty(result.Error);
         }
 
         [Fact]
@@ -28,7 +28,7 @@ namespace UnitTesting.Validations
 
             Assert.False(result.IsValid);
             Assert.Throws<InvalidOperationException>(() => result.Value);
-            Assert.Single(result.Errors);
+            Assert.Single(result.Error);
         }
     }
 }

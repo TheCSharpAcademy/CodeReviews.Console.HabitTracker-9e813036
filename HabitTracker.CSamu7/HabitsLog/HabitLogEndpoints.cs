@@ -1,5 +1,4 @@
 ﻿using HabitTracker.CSamu7.Habits;
-using System;
 
 namespace HabitTracker.CSamu7.HabitsLog
 {
@@ -8,6 +7,8 @@ namespace HabitTracker.CSamu7.HabitsLog
         private readonly HabitService _habitsService = new HabitService();
         private readonly HabitLogService _habitsLogService = new HabitLogService();
         private readonly HabitCreation _habitCreation;
+        private readonly HabitLogInputs _habitInputs = new HabitLogInputs(TimeProvider.System);
+        private readonly HabitLogModification _habitsModification = new HabitLogModification();
         public HabitLogEndpoints()
         {
             _habitCreation = new HabitCreation(TimeProvider.System);
@@ -26,7 +27,7 @@ namespace HabitTracker.CSamu7.HabitsLog
             Console.WriteLine("==============================================");
 
             PostHabitLogModel newHabit = await _habitCreation.CreateHabit();
-            _habitsLogService.CreateHabitLog(newHabit);
+            await _habitsLogService.CreateHabitLog(newHabit);
 
             ConsoleUtils.WriteLine("Your habit has been added", ConsoleColor.Green);
             ConsoleUtils.WaitKey();
@@ -53,6 +54,18 @@ namespace HabitTracker.CSamu7.HabitsLog
                 Console.WriteLine("You don't have habits created");
             }
 
+            ConsoleUtils.WaitKey();
+        }
+        public async Task ModifyLog()
+        {
+            int idHabit = await _habitInputs.GetHabitLogId("Enter the id of the habit that you want modify: ");
+
+            HabitLogModel oldLog = await _habitsLogService.GetLogHabit(idHabit);
+            HabitLogModel modifiedLog = _habitsModification.ModifyHabit(oldLog);
+
+            var result = await _habitsLogService.ModifyHabit(modifiedLog);
+
+            ConsoleUtils.WriteSuccess("The habit has been modified!");
             ConsoleUtils.WaitKey();
         }
     }

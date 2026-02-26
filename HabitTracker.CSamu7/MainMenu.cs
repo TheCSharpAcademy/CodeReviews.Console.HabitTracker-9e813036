@@ -44,10 +44,9 @@ namespace HabitTracker.CSamu7
                     break;
                 case 4: 
                     await habitLogEndpoints.GetLogHabits();
-                    //Check all the logs
                     break;
                 case 5:
-                    //Modify a log
+                    await habitLogEndpoints.ModifyLog();
                     break;
                 case 6:
                     //Delete a log

@@ -3,7 +3,7 @@
     public class ValidationResult<T>
     {
         private readonly T? _value;
-        public List<string> Errors { get; init; }
+        public string Error { get; init; }
         public bool IsValid { get; init; }
         public T Value
         {
@@ -12,19 +12,19 @@
                 return IsValid ? _value! : throw new InvalidOperationException();
             }
         }
-        private ValidationResult(T? result, List<string> errors, bool isValid)
+        private ValidationResult(T? result, string error, bool isValid)
         {
-            Errors = errors;
+            Error = error;
             _value = result;
             IsValid = isValid;
         }
         public static ValidationResult<T> Success(T result)
         {
-            return new ValidationResult<T>(result, [], true);
+            return new ValidationResult<T>(result, String.Empty, true);
         }
-        public static ValidationResult<T> Failure(List<string> errors)
+        public static ValidationResult<T> Failure(string error)
         {
-            return new ValidationResult<T>(default, errors, false);
+            return new ValidationResult<T>(default, error, false);
         }
     }
 }

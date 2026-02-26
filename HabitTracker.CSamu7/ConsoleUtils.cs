@@ -38,6 +38,11 @@
         {
             WriteLine(message, ConsoleColor.Red);
         }
+
+        public static void WriteSuccess(string message)
+        {
+            WriteLine(message, ConsoleColor.Green);
+        }
         public static void WaitKey()
         {
             Console.WriteLine("Press any key to continue");

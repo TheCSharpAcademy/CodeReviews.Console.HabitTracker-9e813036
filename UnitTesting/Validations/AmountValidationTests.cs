@@ -14,7 +14,7 @@ namespace UnitTesting.Validations
 
             Assert.True(result.IsValid);
             Assert.Equal(result.Value, AMOUNT); 
-            Assert.Empty(result.Errors);
+            Assert.Empty(result.Error);
         }
         [Theory]
         [InlineData(-3)]
@@ -26,7 +26,7 @@ namespace UnitTesting.Validations
             var result = sut.Validate(amount);
 
             Assert.False(result.IsValid);
-            Assert.Single(result.Errors);
+            Assert.Single(result.Error);
         }
     }
 }

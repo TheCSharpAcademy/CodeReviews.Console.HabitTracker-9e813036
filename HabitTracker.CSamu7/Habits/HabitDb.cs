@@ -13,11 +13,6 @@ namespace HabitTracker.CSamu7.Habits
 
             _dbCreation.Create(connection);
         }
-        public SqliteConnection GetConnection()
-        {
-            using SqliteConnection connection = new(STRING_CONNECTION);
-
-            return connection;
-        }
+        public SqliteConnection GetConnection() => new(STRING_CONNECTION);
     }
 }

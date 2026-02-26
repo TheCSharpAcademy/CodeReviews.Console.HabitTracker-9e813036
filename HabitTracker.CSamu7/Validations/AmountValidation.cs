@@ -1,22 +1,18 @@
-﻿namespace HabitTracker.CSamu7.Validations
+﻿using static System.Runtime.InteropServices.JavaScript.JSType;
+
+namespace HabitTracker.CSamu7.Validations
 {
     public class AmountValidation
     {
         public ValidationResult<int> Validate(int amount)
         {
-            List<string> errors = new List<string>();
-
             if (amount < 0)
-            {
-                errors.Add("The amount must be a positive amount");
-            }else if(amount == 0)
-            {
-                errors.Add("The amount can't be zero");
-            }
+                return ValidationResult<int>.Failure("The amount must be a positive amount");
 
-            return errors.Count == 0
-                ? ValidationResult<int>.Success(amount)
-                : ValidationResult<int>.Failure(errors);
+            if (amount == 0)
+                return ValidationResult<int>.Failure("The amount can't be zero");
+
+            return ValidationResult<int>.Success(amount);
         }
     }
 }

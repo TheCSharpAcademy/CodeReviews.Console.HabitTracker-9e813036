@@ -11,7 +11,7 @@ namespace HabitTracker.CSamu7.Validations
 
             return habitModel is not null
                 ? ValidationResult<int>.Success(idHabit)
-                : ValidationResult<int>.Failure(["Id doesn't exist"]);
+                : ValidationResult<int>.Failure("Id doesn't exist");
         }
     }
 }
