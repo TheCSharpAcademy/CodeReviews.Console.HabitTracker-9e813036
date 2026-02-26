@@ -29,7 +29,7 @@ namespace HabitTracker.CSamu7.HabitsLog
             PostHabitLogModel newHabit = await _habitCreation.CreateHabit();
             await _habitsLogService.CreateHabitLog(newHabit);
 
-            ConsoleUtils.WriteLine("Your habit has been added", ConsoleColor.Green);
+            ConsoleUtils.WriteLine("Your log has been added", ConsoleColor.Green);
             ConsoleUtils.WaitKey();
         }
         public async Task GetLogHabits()
@@ -51,14 +51,14 @@ namespace HabitTracker.CSamu7.HabitsLog
                 }
             } else
             {
-                Console.WriteLine("You don't have habits created");
+                Console.WriteLine("You don't have any logs created");
             }
 
             ConsoleUtils.WaitKey();
         }
         public async Task ModifyLog()
         {
-            int idHabit = await _habitInputs.GetHabitLogId("Enter the id of the habit that you want modify: ");
+            int idHabit = await _habitInputs.GetHabitLogId("Enter the id of the log that you want modify: ");
 
             HabitLogModel oldLog = await _habitsLogService.GetLogHabit(idHabit);
             HabitLogModel modifiedLog = _habitsModification.ModifyHabit(oldLog);
@@ -67,6 +67,23 @@ namespace HabitTracker.CSamu7.HabitsLog
 
             ConsoleUtils.WriteSuccess("The habit has been modified!");
             ConsoleUtils.WaitKey();
+        }
+
+        public async Task DeleteTask()
+        {
+            int idHabit = await _habitInputs.GetHabitLogId("Enter the id of the log that you want delete: ");
+            Console.Write($"Do you want to delete log #{idHabit}? (y/n): ");
+            string confirmation = Console.ReadLine() ?? String.Empty;
+
+            if (String.Equals(confirmation, "y", StringComparison.CurrentCultureIgnoreCase))
+            {
+                var result = await _habitsLogService.DeleteHabitLog(idHabit);
+                ConsoleUtils.WriteSuccess("The log has been deleted!");
+                ConsoleUtils.WaitKey();
+            } else
+            {
+                return;
+            }
         }
     }
 }

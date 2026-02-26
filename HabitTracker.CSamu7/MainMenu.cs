@@ -49,7 +49,7 @@ namespace HabitTracker.CSamu7
                     await habitLogEndpoints.ModifyLog();
                     break;
                 case 6:
-                    //Delete a log
+                    await habitLogEndpoints.DeleteTask();
                     break;
                 default:
                     Console.WriteLine("This option doesn't exist");

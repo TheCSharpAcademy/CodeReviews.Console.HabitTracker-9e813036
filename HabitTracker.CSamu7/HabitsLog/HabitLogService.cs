@@ -6,6 +6,21 @@ namespace HabitTracker.CSamu7.HabitsLog
     public class HabitLogService
     {
         private readonly HabitDb db = new HabitDb();
+
+        public async Task<bool> DeleteHabitLog(int idHabitLog)
+        {
+            SqliteConnection connection = db.GetConnection();
+            connection.Open();
+
+            using var command = connection.CreateCommand();
+            command.CommandText = "DELETE FROM HabitsLog WHERE habit_log_id = @habit_log_id";
+
+            command.Parameters.Add(new("@habit_log_id", idHabitLog));
+
+            var result = await command.ExecuteNonQueryAsync();
+
+            return result == 1;
+        }
         public async Task<bool> CreateHabitLog(PostHabitLogModel model)
         {
             SqliteConnection connection = db.GetConnection();
@@ -14,9 +29,9 @@ namespace HabitTracker.CSamu7.HabitsLog
             using var command = connection.CreateCommand();
             command.CommandText = "INSERT INTO HabitsLog(habit_id, amount, date) VALUES (@habit_id, @amount, @date)";
             
-            command.Parameters.Add(new SqliteParameter("@habit_id", model.IdHabit));
-            command.Parameters.Add(new SqliteParameter("@amount", model.Amount));
-            command.Parameters.Add(new SqliteParameter("@date", model.UnixTimestamp));
+            command.Parameters.Add(new("@habit_id", model.IdHabit));
+            command.Parameters.Add(new("@amount", model.Amount));
+            command.Parameters.Add(new("@date", model.UnixTimestamp));
 
             var result = await command.ExecuteNonQueryAsync();
 
@@ -30,7 +45,7 @@ namespace HabitTracker.CSamu7.HabitsLog
             using var command = connection.CreateCommand();
             command.CommandText = "SELECT * FROM HabitsLog WHERE habit_log_id = @id";
 
-            command.Parameters.Add(new SqliteParameter("@id", idHabit));
+            command.Parameters.Add(new("@id", idHabit));
 
             using var reader = await command.ExecuteReaderAsync();
             reader.Read();
