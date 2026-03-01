@@ -1,4 +1,5 @@
 ﻿using HabitTracker.CSamu7.Habits;
+using HabitTracker.CSamu7.Utils;
 
 namespace HabitTracker.CSamu7.HabitsLog
 {
@@ -13,34 +14,35 @@ namespace HabitTracker.CSamu7.HabitsLog
         {
             _habitCreation = new HabitCreation(TimeProvider.System);
         }
-        public async Task CreateLogHabit()
+        public async Task Create()
         {
-            Console.WriteLine("YOUR HABITS");
-            Console.WriteLine("==============================================");
-            List<HabitModel> habits = await _habitsService.GetHabits();
+            ConsoleUtils.WriteTitle("LOG CREATION");
+            Console.WriteLine("YOUR ACTUAL HABITS: ");
+
+            ICollection<HabitModel> habits = await _habitsService.GetAll();
+            Console.WriteLine("{0,-5}| {1,-20}", "Id", "Name");
 
             foreach (var habit in habits)
             {
-                Console.WriteLine($"{habit.Id}. {habit.Name}");
+                Console.WriteLine("{0,-5}| {1,-20}", habit.Id, habit.Name);
             }
 
-            Console.WriteLine("==============================================");
+            ConsoleUtils.WriteBorder();
 
             PostHabitLogModel newHabit = await _habitCreation.CreateHabit();
-            await _habitsLogService.CreateHabitLog(newHabit);
+            await _habitsLogService.Create(newHabit);
 
-            ConsoleUtils.WriteLine("Your log has been added", ConsoleColor.Green);
-            ConsoleUtils.WaitKey();
+            ConsoleUtils.WriteSuccess("Your log has been added");
         }
-        public async Task GetLogHabits()
+        public async Task GetAll()
         {
-            ICollection<HabitLogModel> habits = await _habitsLogService.GetHabitLogs();
+            ICollection<HabitLogModel> habits = await _habitsLogService.GetAll();
 
             if (habits.Count > 0)
             {
-                Console.WriteLine(new String('=', 80));
+                ConsoleUtils.WriteBorder();
                 Console.WriteLine("{0,-5}| {1,-20}| {2,-10}| {3,-10}", "Id", "Name", "Amount", "Date");
-                Console.WriteLine(new String('=', 80));
+                ConsoleUtils.WriteBorder();
 
                 foreach (HabitLogModel habit in habits)
                 {
@@ -53,36 +55,33 @@ namespace HabitTracker.CSamu7.HabitsLog
             {
                 Console.WriteLine("You don't have any logs created");
             }
-
-            ConsoleUtils.WaitKey();
         }
-        public async Task ModifyLog()
+        public async Task Modify()
         {
+            ConsoleUtils.WriteTitle("LOG MODIFICATION");
+
             int idHabit = await _habitInputs.GetHabitLogId("Enter the id of the log that you want modify: ");
 
-            HabitLogModel oldLog = await _habitsLogService.GetLogHabit(idHabit);
+            HabitLogModel? oldLog = await _habitsLogService.Get(idHabit);
             HabitLogModel modifiedLog = _habitsModification.ModifyHabit(oldLog);
 
-            var result = await _habitsLogService.ModifyHabit(modifiedLog);
+            await _habitsLogService.Modify(modifiedLog);
 
             ConsoleUtils.WriteSuccess("The habit has been modified!");
-            ConsoleUtils.WaitKey();
         }
 
-        public async Task DeleteTask()
+        public async Task Delete()
         {
+            ConsoleUtils.WriteTitle("TASK DELETION");
+
             int idHabit = await _habitInputs.GetHabitLogId("Enter the id of the log that you want delete: ");
             Console.Write($"Do you want to delete log #{idHabit}? (y/n): ");
             string confirmation = Console.ReadLine() ?? String.Empty;
 
             if (String.Equals(confirmation, "y", StringComparison.CurrentCultureIgnoreCase))
             {
-                var result = await _habitsLogService.DeleteHabitLog(idHabit);
+                await _habitsLogService.Delete(idHabit);
                 ConsoleUtils.WriteSuccess("The log has been deleted!");
-                ConsoleUtils.WaitKey();
-            } else
-            {
-                return;
             }
         }
     }

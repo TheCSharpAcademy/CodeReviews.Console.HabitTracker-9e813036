@@ -13,7 +13,7 @@ namespace UnitTesting.Validations
             var result = sut.Validate(AMOUNT);
 
             Assert.True(result.IsValid);
-            Assert.Equal(result.Value, AMOUNT); 
+            Assert.Equal(result.Value, AMOUNT);
             Assert.Empty(result.Error);
         }
         [Theory]

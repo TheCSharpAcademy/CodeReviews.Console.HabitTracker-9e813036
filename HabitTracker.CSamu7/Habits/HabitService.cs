@@ -1,13 +1,13 @@
-﻿using Microsoft.Data.Sqlite;
+﻿using HabitTracker.CSamu7.Database;
+using Microsoft.Data.Sqlite;
 
 namespace HabitTracker.CSamu7.Habits
 {
     public class HabitService
     {
-        private readonly HabitDb db = new HabitDb();
-        public async Task<HabitModel?> GetHabit(int id)
+        public async Task<HabitModel?> Get(int id)
         {
-            SqliteConnection connection = db.GetConnection();
+            using SqliteConnection connection = new SqliteConnection(DbConstants.STRING_CONNECTION);
             connection.Open();
             using var command = connection.CreateCommand();
 
@@ -21,23 +21,11 @@ namespace HabitTracker.CSamu7.Habits
                 ? new HabitModel(reader.GetInt32(0), reader.GetString(1))
                 : null;
         }
-        public async Task<bool> PostHabit(string name)
+
+        public async Task<ICollection<HabitModel>> GetAll()
         {
-            SqliteConnection connection = db.GetConnection();
-            connection.Open();
-            using var command = connection.CreateCommand();
-
-            command.CommandText = "INSERT INTO Habits(name) VALUES (@name)";
-            command.Parameters.AddWithValue("@name", name);
-
-            var result = await command.ExecuteNonQueryAsync();
-
-            return result == 1;
-        }
-        public async Task<List<HabitModel>> GetHabits()
-        {
-            List<HabitModel> habits = [];
-            var connection = db.GetConnection();
+            ICollection<HabitModel> habits = [];
+            using SqliteConnection connection = new SqliteConnection(DbConstants.STRING_CONNECTION);
             connection.Open();
             using var command = connection.CreateCommand();
 
@@ -51,5 +39,19 @@ namespace HabitTracker.CSamu7.Habits
 
             return habits;
         }
+        public async Task<bool> Create(string name)
+        {
+            using SqliteConnection connection = new SqliteConnection(DbConstants.STRING_CONNECTION);
+            connection.Open();
+            using var command = connection.CreateCommand();
+
+            command.CommandText = "INSERT INTO Habits(name) VALUES (@name)";
+            command.Parameters.AddWithValue("@name", name);
+
+            var result = await command.ExecuteNonQueryAsync();
+
+            return result == 1;
+        }
+
     }
 }

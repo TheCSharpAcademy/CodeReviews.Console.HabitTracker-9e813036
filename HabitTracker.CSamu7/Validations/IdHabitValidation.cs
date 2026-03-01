@@ -7,7 +7,7 @@ namespace HabitTracker.CSamu7.Validations
         private HabitService _habitsService = new HabitService();
         public async Task<ValidationResult<int>> Validate(int idHabit)
         {
-            HabitModel? habitModel = await _habitsService.GetHabit(idHabit);
+            HabitModel? habitModel = await _habitsService.Get(idHabit);
 
             return habitModel is not null
                 ? ValidationResult<int>.Success(idHabit)

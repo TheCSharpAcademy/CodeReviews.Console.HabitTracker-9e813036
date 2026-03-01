@@ -1,6 +1,6 @@
 ﻿using HabitTracker.CSamu7.Habits;
 using HabitTracker.CSamu7.HabitsLog;
-using System.Threading.Tasks;
+using HabitTracker.CSamu7.Utils;
 
 namespace HabitTracker.CSamu7
 {
@@ -13,50 +13,50 @@ namespace HabitTracker.CSamu7
         };
         public void DisplayMenu()
         {
+            ConsoleUtils.WriteTitle("HABITS TRACKER");
             Console.WriteLine("Enter an option");
 
-            for(int i = 0; i<_options.Count; i++)
+            for (int i = 0; i < _options.Count; i++)
             {
                 Console.WriteLine($"{i + 1}. {_options[i]}");
             }
 
-            Console.Write("Enter your option: ");
-            int option = ConsoleUtils.ReadInt();
-
+            int option = ConsoleUtils.ReadInt("Enter the option: ");
             ExecuteOption(option);
-            Console.Clear();
         }
-        public async void ExecuteOption(int option)
+        private async void ExecuteOption(int option)
         {
             HabitEndpoints habitEndpoints = new();
             HabitLogEndpoints habitLogEndpoints = new();
+            Console.Clear();
 
             switch (option)
             {
                 case 1:
-                    habitEndpoints.CreateHabit();
+                    await habitEndpoints.Create();
                     break;
                 case 2:
-                    habitEndpoints.GetHabits();
+                    await habitEndpoints.GetAll();
                     break;
                 case 3:
-                    await habitLogEndpoints.CreateLogHabit();
+                    await habitLogEndpoints.Create();
                     break;
-                case 4: 
-                    await habitLogEndpoints.GetLogHabits();
+                case 4:
+                    await habitLogEndpoints.GetAll();
                     break;
                 case 5:
-                    await habitLogEndpoints.ModifyLog();
+                    await habitLogEndpoints.Modify();
                     break;
                 case 6:
-                    await habitLogEndpoints.DeleteTask();
+                    await habitLogEndpoints.Delete();
                     break;
                 default:
-                    Console.WriteLine("This option doesn't exist");
+                    ConsoleUtils.WriteError("This option doesn't exist");
                     break;
-
             }
-            Console.WriteLine("");
+
+            ConsoleUtils.WaitKey();
+            Console.Clear();
         }
     }
 }

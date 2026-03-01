@@ -12,7 +12,7 @@
             DateTimeOffset now = _timeProvider.GetLocalNow();
             DateTimeOffset dateParsed;
 
-            if(!DateTimeOffset.TryParse(date, out dateParsed))
+            if (!DateTimeOffset.TryParse(date, out dateParsed))
                 return ValidationResult<DateTimeOffset>.Failure("This is a invalid date. Example of valid date (yyyy/mm/dd)");
 
             if (dateParsed > now)

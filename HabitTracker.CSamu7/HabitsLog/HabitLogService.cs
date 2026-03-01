@@ -1,51 +1,18 @@
-﻿using HabitTracker.CSamu7.Habits;
+﻿using HabitTracker.CSamu7.Database;
 using Microsoft.Data.Sqlite;
 
 namespace HabitTracker.CSamu7.HabitsLog
 {
     public class HabitLogService
     {
-        private readonly HabitDb db = new HabitDb();
-
-        public async Task<bool> DeleteHabitLog(int idHabitLog)
+        public async Task<HabitLogModel?> Get(int idHabit)
         {
-            SqliteConnection connection = db.GetConnection();
-            connection.Open();
-
-            using var command = connection.CreateCommand();
-            command.CommandText = "DELETE FROM HabitsLog WHERE habit_log_id = @habit_log_id";
-
-            command.Parameters.Add(new("@habit_log_id", idHabitLog));
-
-            var result = await command.ExecuteNonQueryAsync();
-
-            return result == 1;
-        }
-        public async Task<bool> CreateHabitLog(PostHabitLogModel model)
-        {
-            SqliteConnection connection = db.GetConnection();
-            connection.Open();
-
-            using var command = connection.CreateCommand();
-            command.CommandText = "INSERT INTO HabitsLog(habit_id, amount, date) VALUES (@habit_id, @amount, @date)";
-            
-            command.Parameters.Add(new("@habit_id", model.IdHabit));
-            command.Parameters.Add(new("@amount", model.Amount));
-            command.Parameters.Add(new("@date", model.UnixTimestamp));
-
-            var result = await command.ExecuteNonQueryAsync();
-
-            return result == 1;
-        }
-        public async Task<HabitLogModel?> GetLogHabit(int idHabit)
-        {
-            SqliteConnection connection = db.GetConnection();
+            using SqliteConnection connection = new(DbConstants.STRING_CONNECTION);
             connection.Open();
 
             using var command = connection.CreateCommand();
             command.CommandText = "SELECT * FROM HabitsLog WHERE habit_log_id = @id";
-
-            command.Parameters.Add(new("@id", idHabit));
+            command.Parameters.AddWithValue("id", idHabit);
 
             using var reader = await command.ExecuteReaderAsync();
             reader.Read();
@@ -54,10 +21,10 @@ namespace HabitTracker.CSamu7.HabitsLog
                 ? new(reader.GetInt32(0), reader.GetString(1), reader.GetInt32(2), reader.GetInt64(3))
                 : null;
         }
-        public async Task<ICollection<HabitLogModel>> GetHabitLogs()
+        public async Task<ICollection<HabitLogModel>> GetAll()
         {
             ICollection<HabitLogModel> habits = [];
-            SqliteConnection connection = db.GetConnection();
+            using SqliteConnection connection = new(DbConstants.STRING_CONNECTION);
             connection.Open();
 
             using var command = connection.CreateCommand();
@@ -69,20 +36,36 @@ namespace HabitTracker.CSamu7.HabitsLog
 
             using var reader = await command.ExecuteReaderAsync();
 
-            while (reader.Read()) {
+            while (reader.Read())
+            {
                 int idHabitLog = reader.GetInt32(0);
                 string habitName = reader.GetString(1);
                 int amount = reader.GetInt32(2);
                 long timestamp = reader.GetInt64(3);
 
-                habits.Add(new(idHabitLog, habitName, amount, timestamp));  
+                habits.Add(new(idHabitLog, habitName, amount, timestamp));
             }
 
             return habits;
         }
-        public async Task<bool> ModifyHabit(HabitLogModel newHabit)
+        public async Task<bool> Create(PostHabitLogModel model)
         {
-            SqliteConnection connection = db.GetConnection();
+            using SqliteConnection connection = new(DbConstants.STRING_CONNECTION);
+            connection.Open();
+
+            using var command = connection.CreateCommand();
+            command.CommandText = "INSERT INTO HabitsLog(habit_id, amount, date) VALUES (@habit_id, @amount, @date)";
+            command.Parameters.AddWithValue("@habit_id", model.IdHabit);
+            command.Parameters.AddWithValue("@amount", model.Amount);
+            command.Parameters.AddWithValue("@date", model.UnixTimestamp);
+
+            var result = await command.ExecuteNonQueryAsync();
+
+            return result == 1;
+        }
+        public async Task<bool> Modify(HabitLogModel newHabit)
+        {
+            using SqliteConnection connection = new(DbConstants.STRING_CONNECTION);
             connection.Open();
 
             using var command = connection.CreateCommand();
@@ -91,12 +74,23 @@ namespace HabitTracker.CSamu7.HabitsLog
                 SET amount = @amount, date = @date
                 WHERE habit_log_id = @habitLogId
                 """;
+            command.Parameters.AddWithValue("@amount", newHabit.Amount);
+            command.Parameters.AddWithValue("@date", newHabit.UnixTimeStamp);
+            command.Parameters.AddWithValue("@habitLogId", newHabit.Id);
 
-            command.Parameters.AddRange([
-                new("@amount", newHabit.Amount),
-                new("@date", newHabit.UnixTimeStamp),
-                new("@habitLogId", newHabit.Id)
-                ]);
+            var result = await command.ExecuteNonQueryAsync();
+
+            return result == 1;
+        }
+        public async Task<bool> Delete(int idHabitLog)
+        {
+            using SqliteConnection connection = new(DbConstants.STRING_CONNECTION);
+            connection.Open();
+
+            using var command = connection.CreateCommand();
+            command.CommandText = "DELETE FROM HabitsLog WHERE habit_log_id = @habit_log_id";
+
+            command.Parameters.Add(new("@habit_log_id", idHabitLog));
 
             var result = await command.ExecuteNonQueryAsync();
 

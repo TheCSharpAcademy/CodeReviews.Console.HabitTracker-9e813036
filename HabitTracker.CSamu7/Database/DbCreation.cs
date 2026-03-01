@@ -1,23 +1,14 @@
 ﻿using Microsoft.Data.Sqlite;
-//TODO: Refactorizar el codigo de seeding
-namespace HabitTracker.CSamu7
+
+namespace HabitTracker.CSamu7.Database
 {
     public class DbCreation
     {
-        public void Create(SqliteConnection connection)
-        {
-            DbSeeding seeding = new DbSeeding(connection, 10);
-
-            var command = connection.CreateCommand();
-            command.CommandText = """
+        private readonly string _queryCreateHabitsTable = """
                 CREATE TABLE IF NOT EXISTS Habits 
                 (habit_id INTEGER PRIMARY KEY, name TEXT NOT NULL)
                 """;
-
-            connection.Open();
-            command.ExecuteNonQuery();
-
-            command.CommandText = """
+        private readonly string _queryCreateHabitsLogTable = """
                 CREATE TABLE IF NOT EXISTS HabitsLog
                 (
                     habit_log_id INTEGER PRIMARY KEY, 
@@ -27,9 +18,21 @@ namespace HabitTracker.CSamu7
                     FOREIGN KEY (habit_id) REFERENCES habits(habit_id) ON DELETE CASCADE ON DELETE NO ACTION
                 )
                 """;
+        public async Task Create()
+        {
+            using SqliteConnection connection = new SqliteConnection(DbConstants.STRING_CONNECTION);
+            connection.Open();
 
+            using var command = connection.CreateCommand();
+
+            command.CommandText = _queryCreateHabitsTable;
             command.ExecuteNonQuery();
-            seeding.Seed();
+
+            command.CommandText = _queryCreateHabitsLogTable;
+            command.ExecuteNonQuery();
+
+            DbSeeding seeding = new DbSeeding();
+            await seeding.Seed();
         }
     }
 }

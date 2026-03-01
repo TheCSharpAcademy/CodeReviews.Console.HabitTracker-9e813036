@@ -1,4 +1,5 @@
-﻿using HabitTracker.CSamu7.Validations;
+﻿using HabitTracker.CSamu7.Utils;
+using HabitTracker.CSamu7.Validations;
 
 namespace HabitTracker.CSamu7.HabitsLog
 {
@@ -7,8 +8,8 @@ namespace HabitTracker.CSamu7.HabitsLog
         private readonly TimeProvider _timeProvider;
         private readonly DateValidation _dateValidation;
         private readonly IdLogHabitValidation _logHabitValidation = new();
-        private readonly AmountValidation _amountValidation = new AmountValidation();
-        private readonly IdHabitValidation validation = new IdHabitValidation();
+        private readonly AmountValidation _amountValidation = new();
+        private readonly IdHabitValidation validation = new();
         public HabitLogInputs(TimeProvider timeProvider)
         {
             _timeProvider = timeProvider;
@@ -18,8 +19,7 @@ namespace HabitTracker.CSamu7.HabitsLog
         {
             while (true)
             {
-                Console.Write(message);
-                int id = ConsoleUtils.ReadInt();
+                int id = ConsoleUtils.ReadInt(message);
                 var result = await _logHabitValidation.Validate(id);
 
                 if (result.IsValid) return result.Value;
@@ -31,8 +31,7 @@ namespace HabitTracker.CSamu7.HabitsLog
         {
             while (true)
             {
-                Console.Write(message);
-                int id = ConsoleUtils.ReadInt();
+                int id = ConsoleUtils.ReadInt(message);
                 var result = await validation.Validate(id);
 
                 if (result.IsValid) return result.Value;
@@ -44,8 +43,7 @@ namespace HabitTracker.CSamu7.HabitsLog
         {
             while (true)
             {
-                Console.Write(message);
-                int amount = ConsoleUtils.ReadInt();
+                int amount = ConsoleUtils.ReadInt(message);
                 var result = _amountValidation.Validate(amount);
 
                 if (result.IsValid) return result.Value;

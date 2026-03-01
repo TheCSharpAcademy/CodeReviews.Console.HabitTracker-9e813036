@@ -1,34 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using HabitTracker.CSamu7.Utils;
 
 namespace HabitTracker.CSamu7.Habits
 {
     public class HabitEndpoints
     {
-        private readonly HabitService _service = new HabitService();
-        public async void CreateHabit()
+        private readonly HabitService _service = new();
+        public async Task Create()
         {
+            ConsoleUtils.WriteTitle("HABIT CREATION");
+
             Console.Write("Enter the name: ");
             string name = ConsoleUtils.ReadString();
 
-            HabitService service = new HabitService();
-            bool isSuccess = await service.PostHabit(name);
+            bool isSuccess = await _service.Create(name);
 
-            if (isSuccess) {
-                Console.WriteLine($"The habit {name} has been added!");
+            if (isSuccess)
+            {
+                ConsoleUtils.WriteSuccess($"The habit {name} has been added!");
             } else
             {
-                Console.WriteLine("Something happened...");
+                ConsoleUtils.WriteError("The habit can't be added");
             }
-
-            ConsoleUtils.WaitKey();
         }
-        public async void GetHabits()
+        public async Task GetAll()
         {
-            List<HabitModel> habits = await _service.GetHabits();
+            ICollection<HabitModel> habits = await _service.GetAll();
 
             if (habits.Count > 0)
             {
@@ -42,10 +38,8 @@ namespace HabitTracker.CSamu7.Habits
                 }
             } else
             {
-                Console.WriteLine("You don't have habits created");
+                Console.WriteLine("You don't have any habits created");
             }
-
-            ConsoleUtils.WaitKey();
         }
     }
 }

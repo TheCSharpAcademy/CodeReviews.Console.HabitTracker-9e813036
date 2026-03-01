@@ -1,6 +1,4 @@
-﻿using static System.Runtime.InteropServices.JavaScript.JSType;
-
-namespace HabitTracker.CSamu7.Validations
+﻿namespace HabitTracker.CSamu7.Validations
 {
     public class AmountValidation
     {
