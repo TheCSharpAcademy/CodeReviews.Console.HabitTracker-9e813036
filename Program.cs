@@ -60,7 +60,7 @@ internal class Program
                     break;
                 case "4":
                     Update();
-                    break;;
+                    break;
                 default:
                     Console.WriteLine("\nInvalid Command. Please type a number from 0 to 4.\n");
                     break;
