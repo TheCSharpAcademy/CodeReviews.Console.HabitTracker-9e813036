@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Habit_Tracker_ConsoleApp": {
+      "commandName": "Project",
+      "workingDirectory": "C:\\Users\\Admin\\Documents\\C# course\\Habit_Tracker_ConsoleApp"
+    }
+  }
+}
