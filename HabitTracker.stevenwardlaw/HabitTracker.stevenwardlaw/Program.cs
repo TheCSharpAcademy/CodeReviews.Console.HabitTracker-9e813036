@@ -6,14 +6,11 @@ namespace HabitTracker.stevenwardlaw
 {
     internal class Program
     {
-        // Define the connection string for the database name
         static string connectionString = @"Data Source=habit-Tracker.db";
 
         static void Main(string[] args)
         {
             
-            /* Open the SQLite connection, create the SQL command to create the table if it doesn't exist
-            Then close the connection */
             using (var connection = new SqliteConnection(connectionString))
             {
                 connection.Open();
@@ -30,21 +27,16 @@ namespace HabitTracker.stevenwardlaw
                 connection.Close();
             }
 
-            // Execute the user input method to display the menu and get the users response
             GetUserInput();
         }
 
         // Method that loops through the main menu and the options available until the application is closed.
         static void GetUserInput()
         {
-            // Clear the console for readability
             Console.Clear();
-
-            // Loop the process until the user decides to close the app.
             bool closeApp = false;
             while (!closeApp)
             {
-                // Display the main menu options
                 Console.WriteLine("\n\nMAIN MENU");
                 Console.WriteLine("\nWhat would you like to do?");
                 Console.WriteLine("\nType 0 to close the application.");
@@ -54,7 +46,6 @@ namespace HabitTracker.stevenwardlaw
                 Console.WriteLine("Typr 4 to Update a record");
                 Console.WriteLine("----------------------------------\n");
 
-                // Get the command from the user
                 string commandInput = Console.ReadLine();
 
                 /* Depending on the input entered by the user, call the relevant method,
@@ -85,24 +76,17 @@ namespace HabitTracker.stevenwardlaw
             }
         }
 
-        // Method update an existing record in the table
         private static void Update()
         {
-            // Set the initial SQL query as a string
             string sql = "UPDATE hours_coding SET Date = @date, Quantity = @quantity WHERE id = @id";
-            // Clear the console for readability
             Console.Clear();
             // Display all of the records in the table so the user can easily put the ID
             GetAllRecords();
             Console.WriteLine("Please enter the ID of the record you want to update:");
-            // Get the ID of the record the user wants to delete
             int id = Convert.ToInt32(Console.ReadLine());
-            // Get the new date to be entered from the user
             string date = GetDateInput();
-            // Get the quantity from the user
             int quantity = GetNumberInput("\n\nPlease insert the number of hours spent coding to replace the existing amount (no decimals allowed)\n\n");
 
-            // Open the connection, replace the ID, Date and Quantity with the one provided by the user
             using (var connection = new SqliteConnection(connectionString))
             {
                 connection.Open();
@@ -123,20 +107,15 @@ namespace HabitTracker.stevenwardlaw
             }
         }
 
-        // Method to delete a record from the table
         private static void Delete()
         {
-            // Set the initial SQL query as a string
             string sql = "DELETE FROM hours_coding WHERE id = @id";
-            // Clear the console for readability
             Console.Clear();
             // Display all of the records in the table so the user can easily put the ID
             GetAllRecords();
             Console.WriteLine("Please enter the ID of the record you want to delete:");
-            // Get the ID of the record the user wants to delete
             int id = Convert.ToInt32(Console.ReadLine());
 
-            // Open the connection, replace the ID with the one provided by the user
             using (var connection = new SqliteConnection(connectionString))
             {
                 connection.Open();
@@ -155,15 +134,11 @@ namespace HabitTracker.stevenwardlaw
             }
         }
 
-        // Method to insert a new record into the table
         private static void Insert()
         {
-            // Get the date from the user
             string date = GetDateInput();
-            // Get the quantity from the user
             int quantity = GetNumberInput("\n\nPlease insert the number of hours spent coding (no decimals allowed)\n\n");
 
-            // Open connection, and create the SQL command.
             using (var connection = new SqliteConnection(connectionString))
             {
                 connection.Open();
@@ -178,7 +153,6 @@ namespace HabitTracker.stevenwardlaw
         // Method to display all the records to the user
         private static void GetAllRecords()
         {
-            // Open connection, create SQL command to select all records
             using (var connection = new SqliteConnection(connectionString))
             {
                 connection.Open();
