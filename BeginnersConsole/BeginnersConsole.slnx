@@ -1,0 +1,7 @@
+<Solution>
+  <Folder Name="/HabitTracker/">
+    <File Path="HabitTracker/readme.md" />
+    <Project Path="HabitTracker.Tests/HabitTracker.Tests.csproj" Id="6c26b598-da63-44b1-a7ab-7578a070f52a" />
+    <Project Path="HabitTracker/HabitTracker.csproj" Id="6f291b84-f4ee-4090-894e-89a572f541de" />
+  </Folder>
+</Solution>
