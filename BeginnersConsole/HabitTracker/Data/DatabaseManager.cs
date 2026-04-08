@@ -26,7 +26,7 @@ namespace HabitTracker.Data
             return executeAction(command);
         }
 
-        private int RunNonQuery(string commandText, Dictionary<string, object>? parameters = null) =>
+        private void RunNonQuery(string commandText, Dictionary<string, object>? parameters = null) =>
             ExecuteCommand(commandText, parameters, command => command.ExecuteNonQuery());
 
         private int RunScalar(string commandText, Dictionary<string, object>? parameters = null) =>
