@@ -1,4 +1,4 @@
-﻿using HabitTracker.Model;
+using HabitTracker.Model;
 using Microsoft.Data.Sqlite;
 using System.Globalization;
 
@@ -106,9 +106,10 @@ namespace HabitTracker.Data
 
         public bool DeleteRecord(int id)
         {
-            return RunNonQuery(
+            return ExecuteCommand(
                 "DELETE from habit_records WHERE Id = @id",
-                new Dictionary<string, object> { { "@id", id } }) > 0;
+                new Dictionary<string, object> { { "@id", id } },
+                command => command.ExecuteNonQuery()) > 0;
         }
 
         public bool CheckRecordExists(int id)
