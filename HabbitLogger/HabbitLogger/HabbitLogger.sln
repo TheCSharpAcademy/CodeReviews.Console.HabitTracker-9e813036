@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HabbitLogger", "HabbitLogger.csproj", "{703CED9C-42B4-F00A-9712-5A4425351768}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{703CED9C-42B4-F00A-9712-5A4425351768}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{703CED9C-42B4-F00A-9712-5A4425351768}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{703CED9C-42B4-F00A-9712-5A4425351768}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{703CED9C-42B4-F00A-9712-5A4425351768}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4A65D72C-4942-4822-905C-ECF9AC4DDC35}
+	EndGlobalSection
+EndGlobal

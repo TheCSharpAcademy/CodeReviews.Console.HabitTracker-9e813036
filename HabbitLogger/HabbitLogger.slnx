@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="HabbitLogger/HabbitLogger.csproj" />
+  <Project Path="STUDY.HabbitLogger.UnitTests/STUDY.HabbitLogger.UnitTests.csproj" Id="5c7f52d4-8104-48f4-9faf-272cb6729a53">
+    <Build Solution="Debug|*" Project="false" />
+  </Project>
+</Solution>
