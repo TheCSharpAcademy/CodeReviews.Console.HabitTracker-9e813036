@@ -2,21 +2,28 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4f9b66ec-20d2-4c07-a034-a41474f9ba7e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Kerem.HabitTracker/DataAccess.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Kerem.HabitTracker/Kerem.HabitTracker.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Kerem.HabitTracker/Kerem.HabitTracker.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Kerem.HabitTracker/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Kerem.HabitTracker/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f695d2f2-3d1a-41a0-858a-be44bd630528.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/f695d2f2-3d1a-41a0-858a-be44bd630528.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/data_source_mapping.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="DatabaseLocalColorSettings">
+    <colors>
+      <entry key="371277a6-d945-4fa0-8acb-041d3c2a7e24" value="" />
+    </colors>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 0
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
   <component name="ProjectId" id="39dFTL4k0IQhxZgVnYVx1oFQpx1" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -27,9 +34,18 @@
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
     "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/kerem"
+    "last_opened_file_path": "C:/Users/kerem",
+    "settings.editor.selected.configurable": "database.query.execution"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql",
+      "sqlserver.localdb",
+      "sqlserver"
+    ]
   }
 }]]></component>
   <component name="TaskManager">

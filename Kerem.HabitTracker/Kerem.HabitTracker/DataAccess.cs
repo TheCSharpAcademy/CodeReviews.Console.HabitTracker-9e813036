@@ -17,7 +17,7 @@ namespace Kerem.HabitTracker ;
         {
             var command = connection.CreateCommand();
             command.CommandText = """
-                CREATE TABLE habit (
+                CREATE TABLE IF NOT EXISTS habit (
                     id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
                     name TEXT NOT NULL,
                     date DATETIME NOT NULL,

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataSource name="habit">
-  <database-model serializer="dbm" dbms="SQLITE" family-id="SQLITE" format-version="4.54">
+  <database-model serializer="dbm" dbms="SQLITE" family-id="SQLITE" format-version="4.55">
     <root id="1">
       <ServerVersion>3.51.1</ServerVersion>
     </root>
@@ -568,7 +568,7 @@
     </routine>
     <schema id="214" parent="1" name="main">
       <Current>1</Current>
-      <LastIntrospectionLocalTimestamp>2026-02-13.21:27:47</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2026-07-25.06:58:51</LastIntrospectionLocalTimestamp>
     </schema>
     <argument id="215" parent="14">
       <ArgumentDirection>R</ArgumentDirection>
@@ -1806,53 +1806,64 @@
     <argument id="626" parent="213">
       <Position>1</Position>
     </argument>
-    <table id="627" parent="214" name="sqlite_master">
+    <table id="627" parent="214" name="habit"/>
+    <table id="628" parent="214" name="sqlite_master">
       <System>1</System>
     </table>
-    <table id="628" parent="214" name="sqlite_sequence">
+    <table id="629" parent="214" name="sqlite_sequence">
       <System>1</System>
     </table>
-    <table id="629" parent="214" name="user"/>
-    <column id="630" parent="627" name="type">
-      <Position>1</Position>
-      <StoredType>TEXT|0s</StoredType>
-    </column>
-    <column id="631" parent="627" name="name">
-      <Position>2</Position>
-      <StoredType>TEXT|0s</StoredType>
-    </column>
-    <column id="632" parent="627" name="tbl_name">
-      <Position>3</Position>
-      <StoredType>TEXT|0s</StoredType>
-    </column>
-    <column id="633" parent="627" name="rootpage">
-      <Position>4</Position>
-      <StoredType>INT|0s</StoredType>
-    </column>
-    <column id="634" parent="627" name="sql">
-      <Position>5</Position>
-      <StoredType>TEXT|0s</StoredType>
-    </column>
-    <column id="635" parent="628" name="name">
-      <Position>1</Position>
-    </column>
-    <column id="636" parent="628" name="seq">
-      <Position>2</Position>
-    </column>
-    <column id="637" parent="629" name="id">
+    <column id="630" parent="627" name="id">
       <AutoIncrement>1</AutoIncrement>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>INTEGER|0s</StoredType>
     </column>
-    <column id="638" parent="629" name="name">
+    <column id="631" parent="627" name="name">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>TEXT|0s</StoredType>
     </column>
-    <key id="639" parent="629">
+    <column id="632" parent="627" name="date">
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+      <StoredType>DATETIME|0s</StoredType>
+    </column>
+    <column id="633" parent="627" name="quantity">
+      <DefaultExpression>0</DefaultExpression>
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+      <StoredType>INTEGER|0s</StoredType>
+    </column>
+    <key id="634" parent="627">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
+    <column id="635" parent="628" name="type">
+      <Position>1</Position>
+      <StoredType>TEXT|0s</StoredType>
+    </column>
+    <column id="636" parent="628" name="name">
+      <Position>2</Position>
+      <StoredType>TEXT|0s</StoredType>
+    </column>
+    <column id="637" parent="628" name="tbl_name">
+      <Position>3</Position>
+      <StoredType>TEXT|0s</StoredType>
+    </column>
+    <column id="638" parent="628" name="rootpage">
+      <Position>4</Position>
+      <StoredType>INT|0s</StoredType>
+    </column>
+    <column id="639" parent="628" name="sql">
+      <Position>5</Position>
+      <StoredType>TEXT|0s</StoredType>
+    </column>
+    <column id="640" parent="629" name="name">
+      <Position>1</Position>
+    </column>
+    <column id="641" parent="629" name="seq">
+      <Position>2</Position>
+    </column>
   </database-model>
 </dataSource>

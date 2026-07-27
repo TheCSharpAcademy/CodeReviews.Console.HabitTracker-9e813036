@@ -1,4 +1,6 @@
 ﻿
+using System.Globalization;
+
 namespace Kerem.HabitTracker ;
 
     public class HabitService
@@ -13,19 +15,27 @@ namespace Kerem.HabitTracker ;
             bool validText = ValidationHelper.ValidateTextInput(name);
             if (!validText) return;
             
-            Console.WriteLine("If you want to enter the date, enter 0 or any key other than 0:");
-            int userSelection = int.TryParse(Console.ReadLine() ?? string.Empty, out userSelection) ? userSelection : -1;
-            DateTime date = DateTime.Now;
-            if (userSelection == 0)
+            bool correctDate = false;
+            DateTime date = new DateTime();
+
+            while (!correctDate)
             {
-                Console.WriteLine("Please enter the date of the habit:");
-                date = habit.Date = DateTime.TryParse(Console.ReadLine() ?? string.Empty, out date) ? date : DateTime.Now;
-            }
-            else
-            {
-                date = habit.Date = DateTime.Now;
+                Console.WriteLine("Please enter the date of the habit you want to create, in the format of dd/MM/yyyy");
+                string selectedDate = Console.ReadLine() ?? string.Empty;
+                if (DateTime.TryParseExact(selectedDate, "dd/MM/yyyy", 
+                    CultureInfo.InvariantCulture, DateTimeStyles.None, out date))
+                {
+                    Console.WriteLine($"Date format {date} is valid");
+                    correctDate = true;
+                }
+                else
+                {
+                    Console.WriteLine($"Date format {selectedDate} is invalid");
+                }
             }
             
+   
+      
             Console.WriteLine("Enter how many times you did the habit today:");
             int quantity = habit.Quantity = int.TryParse(Console.ReadLine() ?? string.Empty, out quantity) ? quantity : 0;
             bool validNumericalInput = ValidationHelper.ValidateNumericalInput(quantity);
@@ -86,8 +96,24 @@ namespace Kerem.HabitTracker ;
             bool validNumericalInput = ValidationHelper.ValidateNumericalInput(habitId);
             if (!validNumericalInput) return;
             
-            Console.WriteLine("Please enter the new date of the habit:");
-            DateTime newDate = DateTime.TryParse(Console.ReadLine() ?? string.Empty, out newDate) ? newDate : DateTime.Now;
+            bool correctDate = false;
+            DateTime newDate = new DateTime();
+
+            while (!correctDate)
+            {
+                Console.WriteLine("Please enter the date of the habit you want to create, in the format of dd/MM/yyyy");
+                string selectedDate = Console.ReadLine() ?? string.Empty;
+                if (DateTime.TryParseExact(selectedDate, "dd/MM/yyyy", 
+                    CultureInfo.InvariantCulture, DateTimeStyles.None, out newDate))
+                {
+                    Console.WriteLine($"Date format {newDate} is valid");
+                    correctDate = true;
+                }
+                else
+                {
+                    Console.WriteLine($"Date format {selectedDate} is invalid");
+                }
+            }
             _sqlService.UpdateDateById(habitId, newDate);
             Console.WriteLine("Habit updated successfully.");
             Console.WriteLine();
