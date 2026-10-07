@@ -10,9 +10,12 @@ static class Program
     private static async Task StartProgram()
     {
         UserInterface.Intro();
+        await UserInterface.AskPopulateTableWithRandomData();
+        
         bool endApp = false;
         do
         {
+            Console.WriteLine("----------");
             UserInterface.SpeechToggle();
             UserOption userOption = await UserInterface.AskUserOption();
             switch (userOption.Option)

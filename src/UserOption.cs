@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 
 namespace HabitTracker;
 
@@ -19,7 +20,8 @@ public class UserOption: IParsable<UserOption>
 
     public UserOption(string input)
     {
-        Option = Parse(input).Option;
+        TryParse(input, CultureInfo.CurrentCulture, out var userOption);
+        Option = userOption?.Option;
     }
     public UserOption(Option? option)
     {

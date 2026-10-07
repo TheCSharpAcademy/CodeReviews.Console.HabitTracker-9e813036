@@ -1,3 +1,5 @@
+using System.Globalization;
+
 namespace HabitTracker;
 
 public static class UserInterface
@@ -34,16 +36,28 @@ public static class UserInterface
     public static async Task AskInsert()
     {
         string name = await AskUser.Ask<string>(["Enter the name of the Habit you want to create"], _isSpeechRecognitionActivated);
-        int quantity = await AskUser.Ask<int>(["Enter the amount of times this Habit should be done each week"], _isSpeechRecognitionActivated);
-        DateTime? date = await AskUser.AskOptional<DateTime>(["Enter the date (dd/mm/yyyy) this Habit is due, nothing for today's date"], _isSpeechRecognitionActivated);
+        
+        Habit? habit = DataBaseInterface.GetHabitByName(name);
+        if (habit == null)
+        {
+            // The habit do not exist yet, ask for unit and add to DB
+            string? unit = await AskUser.AskOptional([$"Enter the unit of the new Habit {name}, or nothing if you don't want an unit"], _isSpeechRecognitionActivated);
+            habit = new Habit(name, unit);
+            DataBaseInterface.InsertHabit(habit);
+        }
+        
+        int quantity = await AskUser.Ask<int>([$"Enter the amount (in {habit.Unit ?? "no unit"})"], _isSpeechRecognitionActivated);
+        string datePattern = CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern.ToLower();
+        DateTime? date = await AskUser.AskOptional<DateTime>([$"Enter the date ({datePattern}) this Habit is due, nothing for today's date"], _isSpeechRecognitionActivated);
+        date ??= DateTime.Now;
 
-        Habit habit = new Habit(name: name, quantity: quantity, date: date);
-        bool? confirm = await AskUser.AskOptional<bool>([$"You are trying to insert {habit}","Enter False to dismiss it or nothing if you want to confirm"], _isSpeechRecognitionActivated);
+        HabitRecord habitRecord = new HabitRecord(habit: habit, quantity: quantity, date: date);
+        bool? confirm = await AskUser.AskOptional<bool>([$"You are trying to insert {habitRecord}","Enter False to dismiss it or nothing if you want to confirm"], _isSpeechRecognitionActivated);
 
         // We consider True and null as a confirmation
         if (confirm ?? true)
         {
-            DataBaseInterface.InsertHabit(habit);
+            DataBaseInterface.InsertHabitRecord(habitRecord);
         }
     }
 
@@ -51,20 +65,20 @@ public static class UserInterface
     {
         int? index = await AskUser.AskOptional<int>(["Which habit to you want to delete ? Enter the index of the habit. Nothing to cancel"], _isSpeechRecognitionActivated);
         if (index == null) return;
-        try
+        
+        var records = DataBaseInterface.ViewHabits(id: index);
+        if (records.Count == 0)
         {
-            // If the index exist in db, it returns only 1
-            Habit habit = DataBaseInterface.ViewHabits(id: index)[0];
-            bool? confirm = await AskUser.AskOptional<bool>([$"You are trying to delete {habit}","Enter False to dismiss the deletion or nothing if you want to confirm"], _isSpeechRecognitionActivated);
-            if ((confirm ?? true) && habit.Id.HasValue)
-            {
-                DataBaseInterface.DeleteHabit(habit.Id!.Value);
-            }
-        }
-        catch (IndexOutOfRangeException)
-        {
-            // Means the index didn't exist
             Console.WriteLine($"The {index} Habit doesn't exist");
+            return;
+        }
+
+        HabitRecord habitRecord = records[0];
+        
+        bool? confirm = await AskUser.AskOptional<bool>([$"You are trying to delete {habitRecord}","Enter False to dismiss the deletion or nothing if you want to confirm"], _isSpeechRecognitionActivated);
+        if ((confirm ?? true) && habitRecord.Id.HasValue)
+        {
+            DataBaseInterface.DeleteHabit(habitRecord.Id!.Value);
         }
     }
 
@@ -72,49 +86,57 @@ public static class UserInterface
     {
         int? index = await AskUser.AskOptional<int>(["Which habit to you want to update ? Enter the index of the habit. Nothing to cancel"], _isSpeechRecognitionActivated);
         if (index == null) return;
-        Habit oldHabit;
-        try
-        {
-            oldHabit = DataBaseInterface.ViewHabits(id: index)[0];
-        }
-        catch (IndexOutOfRangeException)
+        
+        var records = DataBaseInterface.ViewHabits(id: index);
+        if (records.Count == 0)
         {
             Console.WriteLine($"The {index} Habit doesn't exist");
             return;
         }
-        
-        Console.WriteLine($"You are trying to update {oldHabit}");
-        
-        string? newName = await AskUser.AskOptional([$"Enter the new name of the Habit, or nothing to keep {oldHabit.Name}"], _isSpeechRecognitionActivated);
-        int? newQuantity = await AskUser.AskOptional<int>([$"Enter the new amount of times this Habit should be done each week, or nothing to keep {oldHabit.Quantity}"], _isSpeechRecognitionActivated);
-        DateTime? newDate = await AskUser.AskOptional<DateTime>([$"Enter the new date (YYYY/mm/dd HH:mm:ss) this Habit is due, nothing to keep {oldHabit.Date}"], _isSpeechRecognitionActivated);
 
-        Habit newHabit = new Habit(
-            oldHabit.Id, 
-            newName ?? oldHabit.Name, 
-            newQuantity ?? oldHabit.Quantity,
-            newDate ?? oldHabit.Date);
+        HabitRecord oldHabitRecord = records[0];
+        
+        Console.WriteLine($"You are trying to update {oldHabitRecord}");
+        
+        int? newQuantity = await AskUser.AskOptional<int>([$"Enter the new amount of times this Habit should be done each week, or nothing to keep {oldHabitRecord.Quantity}"], _isSpeechRecognitionActivated);
+        DateTime? newDate = await AskUser.AskOptional<DateTime>([$"Enter the new date (YYYY/mm/dd HH:mm:ss) this Habit happened, nothing to keep {oldHabitRecord.Date}"], _isSpeechRecognitionActivated);
+
+        HabitRecord newHabitRecord = new HabitRecord(
+            oldHabitRecord.Habit, 
+            oldHabitRecord.Id,
+            newQuantity ?? oldHabitRecord.Quantity,
+            newDate ?? oldHabitRecord.Date);
         
         bool? confirm = await AskUser.AskOptional<bool>(
-            [$"This is the updated Habit: {newHabit}", 
+            [$"This is the updated Habit: {newHabitRecord}", 
                 "Enter False to dismiss the update or nothing if you want to confirm"], _isSpeechRecognitionActivated);
         if ((confirm ?? true))
         {
-            DataBaseInterface.UpdateHabit(newHabit);
+            DataBaseInterface.UpdateHabit(newHabitRecord);
         }
         
     }
 
     public static async Task AskView()
     {
-        Console.WriteLine("For the next filed, enter nothing to not filter by the corresponding parameter");
+        Console.WriteLine("For the next fields, enter nothing to not filter by the corresponding parameter");
         int? index = await AskUser.AskOptional<int>(["Enter the index of the habit you want to see"], _isSpeechRecognitionActivated);
         string? name = await AskUser.AskOptional([$"Enter the name of the habit you want to see"], _isSpeechRecognitionActivated);
-        DateTime? startDate = await AskUser.AskOptional<DateTime>([$"Enter the date (YYYY/mm/dd HH:mm:ss) that are due AFTER it"], _isSpeechRecognitionActivated);
-        DateTime? endDate = await AskUser.AskOptional<DateTime>([$"Enter the date (YYYY/mm/dd HH:mm:ss) that are due BEFORE it"], _isSpeechRecognitionActivated);
+        string datePattern = CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern.ToLower();
+        DateTime? startDate = await AskUser.AskOptional<DateTime>([$"Enter the STARTING date ({datePattern}) of the habits"], _isSpeechRecognitionActivated);
+        DateTime? endDate = await AskUser.AskOptional<DateTime>([$"Enter the ENDING date ({datePattern}) of the habits"], _isSpeechRecognitionActivated);
         
         Console.WriteLine("This is the list of Habits you wanted to see:");
         Console.WriteLine(string.Join("\n", DataBaseInterface.ViewHabits(index, name, startDate, endDate)));
+    }
+
+    public static async Task AskPopulateTableWithRandomData()
+    {
+        bool answer = await AskUser.AskOptional<bool>(["Do you want to populate the tables with random data ? nothing if not, true otherwise"],
+            _isSpeechRecognitionActivated) ?? false;
+
+        if (!answer) return;
+        await DataBaseInterface.PopulateTableWithRandomData();
     }
 
     public static void ToggleSpeech()

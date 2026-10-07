@@ -1,3 +1,5 @@
+using System.Globalization;
+
 namespace HabitTracker;
 using Console = System.Console;
 
@@ -22,7 +24,7 @@ public static class AskUser
             WriteNotValidOption(isValidOption);
             WriteOption(optionTexts);
             
-            isValidOption = T.TryParse(Console.ReadLine(), null, out result);
+            isValidOption = T.TryParse(Console.ReadLine(), CultureInfo.CurrentCulture, out result);
         } while (!isValidOption);
 
         // isValidOption is true when result get correctly parsed so != null
@@ -55,7 +57,7 @@ public static class AskUser
                 return null;
             }
 
-            isValidOption = T.TryParse(input, null, out var parsedResult);
+            isValidOption = T.TryParse(input, CultureInfo.CurrentCulture, out var parsedResult);
             if (isValidOption)
             {
                 result = parsedResult;

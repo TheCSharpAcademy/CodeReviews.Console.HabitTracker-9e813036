@@ -1,4 +1,6 @@
-﻿namespace HabitTracker.Tests;
+﻿using System.Globalization;
+
+namespace HabitTracker.Tests;
 
 public class UserOptionTest
 {
@@ -21,7 +23,7 @@ public class UserOptionTest
     {
         string? input = null;
 
-        Assert.False(UserOption.TryParse(input, null, out _));
+        Assert.False(UserOption.TryParse(input, CultureInfo.CurrentCulture, out _));
         Assert.Throws<FormatException>(() => UserOption.Parse(input));
     }
     
@@ -31,7 +33,7 @@ public class UserOptionTest
         const string input1 = "   i  ";
         var res1 = new UserOption(Option.Insert);
         
-        Assert.True(UserOption.TryParse(input1, null, out _));
+        Assert.True(UserOption.TryParse(input1, CultureInfo.CurrentCulture, out _));
         Assert.Equal(UserOption.Parse(input1).Option, res1.Option);
         
         const string input2 = "Q   \n    ";
@@ -49,7 +51,7 @@ public class UserOptionTest
         Assert.False(UserOption.TryParse(input1, null, out _));
         Assert.Throws<FormatException>(() => UserOption.Parse(input1));
         
-        const string input2 = "  s      ";
+        const string input2 = "  a      ";
         
         Assert.False(UserOption.TryParse(input2, null, out _));
         Assert.Throws<FormatException>(() => UserOption.Parse(input2));
